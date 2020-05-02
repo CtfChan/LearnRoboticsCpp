@@ -9,12 +9,14 @@
 #include<Eigen/Eigen>
 
 using Path = std::vector<std::pair<float, float>>;
-
+using Ellipse =  std::vector<std::pair<float, float>>;
 
 float deg2rad(float deg) {
     return (deg / 180.f * M_PI);
 }
 
+
+Ellipse generateEllipse(const Eigen::Vector4f& x_est, const Eigen::Matrix4f& P_est);
 
 Eigen::Vector4f motionModel(const Eigen::Vector4f& x, const Eigen::Vector2f& u, const float dt);
 

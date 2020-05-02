@@ -69,7 +69,39 @@ void extendedKalmanFilter(Eigen::Vector4f& x_est, Eigen::Matrix4f& P_est,
     Eigen::Matrix<float, 4, 2> K  = P_pred *  J_H.transpose() * S.inverse();
 
     x_est = x_pred + K * y;
-    P_pred = (Eigen::Matrix4f::Identity()  - K * J_H) * P_pred;
+    P_est = (Eigen::Matrix4f::Identity()  - K * J_H) * P_pred;
+}
+
+
+
+Ellipse generateEllipse(const Eigen::Vector4f& x_est, const Eigen::Matrix4f& P_est) {
+    Ellipse ep;
+
+    Eigen::Matrix2f p_xy = P_est.block(0, 0, 2, 2); // get cov of x,y
+    Eigen::EigenSolver<Eigen::Matrix2f> ces(p_xy);
+    Eigen::Matrix2f evals = ces.pseudoEigenvalueMatrix();
+    Eigen::Matrix2f evecs = ces.pseudoEigenvectors(); // row major
+ 
+    // biger eval is 0th idx
+    float a = std::sqrt(evals(0,0));
+    float b = std::sqrt(evals(1,1));
+
+    // use angle of dominant direction w/ x-axis to determine rotation
+    float angle = std::atan2(evecs(0, 1), evecs(0, 0));
+    Eigen::Matrix2f rot; // rotation matrix
+    rot << std::cos(angle), std::sin(angle),
+           -std::sin(angle), std::cos(angle);
+
+
+    for (float t = 0.0; t < 2 * M_PI + 0.1; t += 0.1) {
+        Eigen::Vector2f x;
+        x << a * std::cos(t), b * std::sin(t);
+        Eigen::Vector2f fx = rot * x;
+        ep.emplace_back(fx(0) + x_est(0), fx(1) + x_est(1));
+    }
+
+
+    return ep;
 }
 
 
@@ -130,6 +162,10 @@ int main(){
     Path obs_path;
     Path est_path;
 
+    gp << "set size ratio 1.0\n";
+    gp << "set term gif animate\n";
+    gp << "set output '../animations/ekf.gif'\n";
+
 
     float time = 0.0f;
     while(time <= sim_time){
@@ -156,18 +192,25 @@ int main(){
         extendedKalmanFilter(x_est, P_est, ud, z, Q, R, dt);
         est_path.emplace_back(x_est(0), x_est(1));
 
+        // generate error ellipse
+        Ellipse error_ellipse = generateEllipse(x_est, P_est);
 
         gp << "plot '-' title 'ground truth' with lines,"
                     "'-' title 'odometry' with lines,"
                     "'-' title 'observation',"
+                    "'-' title 'covariance' with lines,"
                     "'-' title 'filter' with lines\n";
         gp.send1d(gt_path);
         gp.send1d(dr_path);
         gp.send1d(obs_path);
+        gp.send1d(error_ellipse);
         gp.send1d(est_path);
-        sleep(0.5);        
+        sleep(0.2);        
 
     }
+
+    gp << "set output\n";
+
 
 }
 
