@@ -205,6 +205,8 @@ int main(){
         gp.send1d(obs_path);
         gp.send1d(error_ellipse);
         gp.send1d(est_path);
+        // sleep(0.2);        
+
     }
 
     gp << "set output\n";

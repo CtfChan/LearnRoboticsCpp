@@ -51,7 +51,8 @@ target_link_libraries(potential_field ${Boost_LIBRARIES})
 add_executable(ekf src/ekf.cpp)
 target_link_libraries(ekf ${Boost_LIBRARIES})
 
-
+add_executable(ukf src/ukf.cpp)
+target_link_libraries(ukf ${Boost_LIBRARIES})
 
 # add_executable(demo src/demo.cpp)
 # target_link_libraries(demo ${OpenCV_LIBS} ${Boost_LIBRARIES} )
