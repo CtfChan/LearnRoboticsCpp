@@ -46,9 +46,10 @@ $ make -j4
 ![Extended Kalman Filte Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/ekf.gif)
 
 
-### EKF (Unscented Kalman Filter)
+### UKF (Unscented Kalman Filter)
 ![Unscented Kalman Filte Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/ukf.gif)
 
+We can see error ellipse in this demo is a much better approximation of the true distribution. EKF can be biased and inconsistent. 
 
 ## To Do
 - [X] gnuplot scatter
