@@ -18,9 +18,8 @@ Control MoveToPoseController::moveToPose(const Pose& curr)  {
     float beta  = fmod(goal_.theta - curr.theta - alpha + M_PI, 2 * M_PI) - M_PI;
 
     float angle_diff = fmod(goal_.theta - curr.theta + M_PI, 2 * M_PI) - M_PI;
-    // std::cout << "angle diff: " << (angle_diff * 180.0f/M_PI) << std::endl;
-    // std::cout << "rho: " << rho << std::endl;
-    if (rho < 0.1 && angle_diff < 5.0f * M_PI/180.f ) {
+
+    if (rho < 0.1 && std::abs(angle_diff) < 5.0f * M_PI/180.f ) {
         arrived_ = true;
         return u;
     }
