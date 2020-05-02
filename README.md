@@ -41,7 +41,9 @@ $ make -j4
 ![Potential Field Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/potential_field.gif)
 
 
-
+## Localization
+### EKF (Extended Kalman Filter)
+![Extended Kalman Filte Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/ekf.gif)
 
 
 ## To Do
@@ -54,7 +56,7 @@ $ make -j4
 - [x] rrtstar
 - [x] dwa
 - [x] potential field
-- [ ] ekf
+- [x] ekf
 - [ ] ukf
 - [ ] move to pose
 - [ ] cubic spline
