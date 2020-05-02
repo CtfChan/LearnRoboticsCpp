@@ -41,6 +41,12 @@ $ make -j4
 ![Potential Field Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/potential_field.gif)
 
 
+## Path Tracking
+### Move To Pose
+![Move To Pose Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/move_to_pose.gif)
+
+
+
 ## Localization
 ### EKF (Extended Kalman Filter)
 ![Extended Kalman Filte Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/ekf.gif)
@@ -63,7 +69,7 @@ We can see error ellipse in this demo is a much better approximation of the true
 - [x] potential field
 - [x] ekf
 - [x] ukf
-- [ ] move to pose
+- [x] move to pose
 - [ ] cubic spline
 - [ ] quintic spline
 - [ ] particle filtering

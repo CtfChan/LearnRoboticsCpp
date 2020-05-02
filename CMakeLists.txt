@@ -44,6 +44,16 @@ add_executable(potential_field src/potential_field.cpp)
 target_link_libraries(potential_field ${Boost_LIBRARIES})
 
 
+
+##############################
+#PathTracking
+##############################
+
+add_executable(move_to_pose src/move_to_pose.cpp)
+target_link_libraries(move_to_pose ${Boost_LIBRARIES})
+
+
+
 ##############################
 #Localization
 ##############################
@@ -54,9 +64,3 @@ target_link_libraries(ekf ${Boost_LIBRARIES})
 add_executable(ukf src/ukf.cpp)
 target_link_libraries(ukf ${Boost_LIBRARIES})
 
-# add_executable(demo src/demo.cpp)
-# target_link_libraries(demo ${OpenCV_LIBS} ${Boost_LIBRARIES} )
-
-
-# add_executable(scatter src/scatter.cpp)
-# target_link_libraries(scatter ${OpenCV_LIBS} ${Boost_LIBRARIES} )
