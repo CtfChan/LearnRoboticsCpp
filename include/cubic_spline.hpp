@@ -1,6 +1,6 @@
 # pragma once
 
-# include <Eigen/Core>
+# include <Eigen/Eigen>
 
 class CubicSpline {
 public:
@@ -16,11 +16,15 @@ private:
 
     size_t searchIndex(float x);
 
-    Eigen::MatrixXf generateA();
+    Eigen::MatrixXf generateA(const std::vector<float>& h);
 
-    Eigen::VectorXf generateB();
+    Eigen::VectorXf generateB(const std::vector<float>& h);
 
     Eigen::VectorXf a_, b_, c_, d_;
+
+    std::vector<float> x_, y_, h_;
+
+    size_t nx_;
 
 };
 
@@ -35,9 +39,12 @@ public:
     float calculateYaw(float s);
 
 private:
-    std::vector<float> calculateS();
+    std::vector<float> calculateS(const std::vector<float>& x, 
+                                  const std::vector<float>& y);
 
     std::vector<float> s_;
+    CubicSpline sx_;
+    CubicSpline sy_;
 
 };
 
