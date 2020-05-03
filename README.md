@@ -40,6 +40,8 @@ $ make -j4
 ### Potential Field Algorithm
 ![Potential Field Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/potential_field.gif)
 
+### Quintic Polynomial
+![Quintic Polynomial Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/quintic_polynomial.gif)
 
 ## Path Tracking
 ### Move To Pose

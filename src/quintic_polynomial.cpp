@@ -16,7 +16,7 @@ QuinticPolynomial::QuinticPolynomial(float xs, float vs, float as,
     Eigen::Matrix3f A;
     A << std::pow(T, 3), std::pow(T, 4), std::pow(T, 5),
         3*std::pow(T, 2), 4*std::pow(T, 3), 5*std::pow(T,4),
-        5*T, 12 * std::pow(T, 2), 20*std::pow(T,3);
+        6*T, 12 * std::pow(T, 2), 20*std::pow(T,3);
     Eigen::Vector3f b;
     b << xe - a0_ - a1_ * T - a2_ * std::pow(T, 2),
          ve - a1_ - 2 * a2_ * T,
@@ -99,7 +99,7 @@ QuinticPolynomialTrajectory quinticPolynomialPlanner(State& start, State& goal,
             float jx = xqp.calculateThirdDerivative(t);
             float jy = yqp.calculateThirdDerivative(t);
             float j = std::hypot(jx, jy);
-            if (rj.size() >= 2 && rj.end()[-1] - rj.end()[-2] < 0.f)
+            if (rj.size() >= 2 && ra.end()[-1] - ra.end()[-2] < 0.f)
                 j *= -1; // reduction in jerk, add sign
             rj.push_back(j);
 
@@ -128,31 +128,31 @@ int main() {
     float max_jerk = 0.5f;
     float dt = 0.1;
 
+    // min and max time to goal
     float max_T = 100.f;
     float min_T = 5.f;
     float T_res = 5.f;
 
     Gnuplot gp;
 
-    // gp << "set size ratio 1.0\n";
-    // gp << "set xrange [0:35]\nset yrange [-20:15]\n";
-    // gp << "set term gif animate\n";
-    // gp << "set output '../animations/quintic_polynomial.gif'\n";
-
+    gp << "set term gif animate\n";
+    gp << "set output '../animations/quintic_polynomial.gif'\n";
     gp << "set size 1,1 \n";
-    gp << "set multiplot\n";
 
     QuinticPolynomialTrajectory states = quinticPolynomialPlanner(
         start, goal, min_T, max_T, T_res, max_accel, max_jerk, dt);
     
+    // generate animation
     for (size_t i = 0; i < states.time.size(); ++i) {
+
+        gp << "set multiplot\n";
+
         std::vector<float> plot_x(states.x.begin(), states.x.begin() + i);
         std::vector<float> plot_y(states.y.begin(), states.y.begin() + i);
         std::vector<float> plot_time(states.time.begin(), states.time.begin() + i);
         std::vector<float> plot_v(states.v.begin(), states.v.begin() + i);
         std::vector<float> plot_a(states.a.begin(), states.a.begin() + i);
         std::vector<float> plot_j(states.j.begin(), states.j.begin() + i);
-
 
         // plot trajectory
         gp << "set size 0.5, 0.5\n";
@@ -171,26 +171,28 @@ int main() {
         // plot velocity
         gp << "set size 0.5, 0.5\n";
         gp << "set origin 0.5, 0.5\n"; 
-        gp << "set xrange [0:100]\nset yrange [-5:5]\n";
+        gp << "set xrange [0:50]\nset yrange [-5:5]\n";
         gp << "plot '-' with line title 'velocity'\n";
         gp.send1d(boost::make_tuple(plot_time, plot_v));
 
         // plot acc
         gp << "set size 0.5, 0.5\n";
         gp << "set origin 0.0, 0.0\n"; 
-        gp << "set xrange [0:100]\nset yrange [-3:3]\n";
+        gp << "set xrange [0:50]\nset yrange [-1:1]\n";
         gp << "plot '-' with line title 'acceleration'\n";
         gp.send1d(boost::make_tuple(plot_time, plot_a));
 
         // plot jerk
         gp << "set size 0.5, 0.5\n";
         gp << "set origin 0.5, 0.0\n"; 
-        gp << "set xrange [0:100]\nset yrange [-3:3]\n";
+        gp << "set xrange [0:50]\nset yrange [-1:1]\n";
         gp << "plot '-' with line title 'jerk'\n";
         gp.send1d(boost::make_tuple(plot_time, plot_j));
 
-    }
 
-    // gp << "set output\n";
+        gp << "unset multiplot\n";
+
+    }
+    gp << "set output\n";
 
 }
