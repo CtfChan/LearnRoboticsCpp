@@ -44,6 +44,10 @@ add_executable(potential_field src/potential_field.cpp)
 target_link_libraries(potential_field ${Boost_LIBRARIES})
 
 
+add_executable(quintic_polynomial src/quintic_polynomial.cpp)
+target_link_libraries(quintic_polynomial ${Boost_LIBRARIES})
+
+
 
 ##############################
 #PathTracking
