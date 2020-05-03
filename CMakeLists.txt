@@ -48,6 +48,9 @@ add_executable(quintic_polynomial src/quintic_polynomial.cpp)
 target_link_libraries(quintic_polynomial ${Boost_LIBRARIES})
 
 
+add_executable(cubic_spline src/cubic_spline.cpp)
+target_link_libraries(cubic_spline ${Boost_LIBRARIES})
+
 
 ##############################
 #PathTracking
