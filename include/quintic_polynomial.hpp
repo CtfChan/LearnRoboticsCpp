@@ -1,6 +1,6 @@
 # pragma once
 
-# include <vector>
+#include <vector>
 
 struct State {
     float x;
@@ -10,14 +10,20 @@ struct State {
     float a;
 };
 
-struct StateWithTime : State {
-    float time;
+struct QuinticPolynomialTrajectory {
+    std::vector<float> time; 
+    std::vector<float> x; 
+    std::vector<float> y; 
+    std::vector<float> yaw; 
+    std::vector<float> v; 
+    std::vector<float> a; 
+    std::vector<float> j; 
 };
 
 class QuinticPolynomial {
 public:
     // boundary conditions and time
-    QuinticPolynomial(float xs, float vs, float as, float xe, float ve, float ae, float time);
+    QuinticPolynomial(float xs, float vs, float as, float xe, float ve, float ae, float T);
 
     float calculatePoint(float t);
 
@@ -28,11 +34,11 @@ public:
     float calculateThirdDerivative(float t);
 
 private:
-    float a0, a1, a2, a3, a4, a5;
+    float a0_, a1_, a2_, a3_, a4_, a5_;
 
 };
 
 
-std::vector<StateWithTime> quinticPolynomialPlanner(State& start, State& goal,
+QuinticPolynomialTrajectory quinticPolynomialPlanner(State& start, State& goal,
     float min_T, float max_T, float T_res, float max_accel, float max_jerk, float dt);
 
