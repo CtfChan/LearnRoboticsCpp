@@ -2,9 +2,20 @@
 
 #include <math.h>
 #include <tuple>
+#include <vector>
+
 
 float deg2rad(float deg) {
     return deg * M_PI/ 180.0f;
+}
+
+// clip angle to [-pi, pi]
+float normalizeAngle(float angle) {
+    while (angle > M_PI)
+        angle-= 2.0f * M_PI;
+    while (angle < -M_PI) 
+        angle += 2.0f*M_PI;
+    return angle;
 }
 
 std::vector<std::tuple<float, float, float, float>> 
@@ -12,5 +23,7 @@ std::vector<std::tuple<float, float, float, float>>
     float dx = r * std::cos(theta);
     float dy = r * std::sin(theta);
     auto arrow = std::make_tuple(x, y, dx ,dy);
-    return { arrow  };
+    return { arrow };
 }
+
+

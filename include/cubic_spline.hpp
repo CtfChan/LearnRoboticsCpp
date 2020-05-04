@@ -2,6 +2,15 @@
 
 # include <Eigen/Eigen>
 
+
+struct SplineCourse {
+    std::vector<float> rx, ry, ryaw, rk, s;
+};
+
+SplineCourse calculateSplineCourse(const std::vector<float>& x, 
+    const std::vector<float>& y, float ds=0.1);
+
+
 class CubicSpline {
 public:
     CubicSpline(const std::vector<float>& x, const std::vector<float>& y);

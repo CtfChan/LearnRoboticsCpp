@@ -53,7 +53,6 @@ $ make -j4
 ![Move To Pose Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/move_to_pose.gif)
 
 
-
 ## Localization
 ### EKF (Extended Kalman Filter)
 ![Extended Kalman Filte Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/ekf.gif)
@@ -77,15 +76,19 @@ We can see error ellipse in this demo is a much better approximation of the true
 - [x] ekf
 - [x] ukf
 - [x] move to pose
-- [ ] cubic spline
-- [ ] quintic spline
-- [ ] particle filtering
+- [x] cubic spline
+- [x] quintic spline
 - [ ] stanley controller
 - [ ] mpc
 - [ ] state lattice (do after mpc)
 - [ ] informed rrtstar
 - [ ] batch informed rrtstar
+- [ ] reed shepps path
 - [ ] hybrid A*
+- [ ] particle filtering
+- [ ] EKFSLAM
+- [ ] FAST SLAM
+- [ ] Graph slam
 - [ ] lidar to grip map
 - [ ] frontier exploration 
 - [ ] icp
@@ -97,3 +100,5 @@ We can see error ellipse in this demo is a much better approximation of the true
 - [ ] visualization of ekf, error ellipse
 - [ ] gtest integration
 - [ ] categorize into planning, localization, perception. hybrid approaches
+- [ ] turn algos into ALG.hpp, ALG.cpp, example_ALG.cpp 
+- [ ] decouple algo from gnuplot
