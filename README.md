@@ -43,6 +43,11 @@ $ make -j4
 ### Quintic Polynomial
 ![Quintic Polynomial Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/quintic_polynomial.gif)
  
+### Cubic Spline
+![Cubic Spline Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/cubic_spline.gif)
+ 
+
+
 ## Path Tracking
 ### Move To Pose
 ![Move To Pose Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/move_to_pose.gif)

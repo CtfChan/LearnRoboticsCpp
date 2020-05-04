@@ -178,9 +178,12 @@ int main() {
     
 
     Gnuplot gp;
+    gp << "set term gif animate\n";
+    gp << "set output '../animations/cubic_spline.gif'\n";
 
     gp << "set size 1,1 \n";
     gp << "set multiplot\n";
+    gp << "unset key\n";
 
     // plot spline
     gp << "set size 0.5, 0.5\n";
@@ -191,14 +194,13 @@ int main() {
     gp.send1d(boost::make_tuple(rx, ry));
     gp.send1d(boost::make_tuple(x, y));
 
-
     // plot yaw and line len
     gp << "set size 0.5, 0.5\n";
     gp << "set origin 0.5, 0.5\n"; 
     gp << "set title 'Yaw .vs Arc Length'\n";
     for (auto& yaw : ryaw) 
         yaw = yaw * 180.f/M_PI;
-    gp << "plot '-' \n";
+    gp << "plot '-' with line \n";
     gp.send1d(boost::make_tuple(rs, ryaw));
 
 
@@ -206,10 +208,11 @@ int main() {
     gp << "set origin 0.0, 0.0\n"; 
     gp << "set title 'Curvature vs. Arc Length'\n";
 
-    gp << "plot '-' \n ";
+    gp << "plot '-' with line \n ";
     gp.send1d(boost::make_tuple(rs, rk));
 
     gp << "unset multiplot\n";
+    gp << "set output\n";
 
     return 0;
 }
