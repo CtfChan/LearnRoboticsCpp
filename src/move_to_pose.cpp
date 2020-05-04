@@ -41,7 +41,6 @@ int main(){
     Gnuplot gp;
     gp << "set xrange [-1:21]\nset yrange [-1:21]\n";
 
-
     // params
     float Kp_rho = 9.0f;
     float Kp_alpha = 15.0f;

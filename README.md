@@ -53,6 +53,9 @@ $ make -j4
 ![Move To Pose Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/move_to_pose.gif)
 
 
+![Stanely Control Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/stanley_control.gif)
+
+
 ## Localization
 ### EKF (Extended Kalman Filter)
 ![Extended Kalman Filte Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/ekf.gif)
