@@ -58,9 +58,9 @@ Eigen::VectorXf CubicSpline::generateB(const std::vector<float>& h) {
 
     for (size_t i = 0; i < nx_ - 2; ++i ) {
         B(i+1) = 3.f * (a_(i+2) - a_(i+1)) / h[i+1]   -
-                 -3.f * (a_(i+1) - a_(i)) / h[i];
+                 3.f * (a_(i+1) - a_(i)) / h[i];
     }
-
+       
     return B;
 }
 
@@ -126,14 +126,6 @@ std::vector<float> CubicSpline2D::calculateS(
         float r = std::hypot(dx[i], dy[i]);
         s[i+1] = s[i] + r;
     }
-
-    // std::cout << "My s: " << std::endl;
-    // for (auto num : s) {
-    //     std::cout << num << " ";
-    // }
-    // std::cout << std::endl;
-
-    
 
     return s;
 }
