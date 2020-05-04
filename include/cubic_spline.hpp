@@ -38,6 +38,10 @@ public:
 
     float calculateYaw(float s);
 
+    const std::vector<float>& getS() const {
+        return s_;
+    }
+
 private:
     std::vector<float> calculateS(const std::vector<float>& x, 
                                   const std::vector<float>& y);
