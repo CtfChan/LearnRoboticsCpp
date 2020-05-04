@@ -1,8 +1,39 @@
 # LearnRoboticsCpp
 
-This repository contains my implementations of classical robotics algorithms in C++. Inspiration drawn from [PythonRobotics](https://github.com/AtsushiSakai/PythonRobotics) and [CppRobotics](https://github.com/onlytailei/CppRobotic). I used gnuplot-iostream (CITE) to plot the results.
+This repository contains my implementations of classical robotics algorithms in C++. Inspiration drawn from [PythonRobotics](https://github.com/AtsushiSakai/PythonRobotics) and [CppRobotics](https://github.com/onlytailei/CppRobotic). The CppRobotics repo was very good, but it used OpenCV to plot 2D graphs. I found the process of converting 2D points to pixel coordinates in OpenCV very tedious and seems like a bit of a hack. This repo uses Gnuplot instead for plotting which makes much prettier graphs than OpenCV and simplifies that code.
 
-## Requirment
+## Table of Contents
+* [Requirements](#requirements)
+* [Build](#build)
+* [Localization](#localization)
+    * [Extended Kalman Filter](#extended-kalman-filter)
+    * [Unscented Kalman Filter](#unscented-kalman-filter)
+    * Particle Filter 1
+* [SLAM](#slam)
+    * ICP 
+    * EKF-SLAM 
+    * FastSLAM
+    * GraphSLAM
+* [Path Planning](#path-planning)
+    * [Dijkstra](#dijkstra)
+    * [AStar](#astar)
+    * [RRT](#rrt)
+    * [RRTstar](#rrtstar)
+    * [PRM](#prm)
+    * [Potential Field](#potential-field)
+    * [Quintic Polynomial](#quintic-polynomial)
+    * [Cubic Spline](#cubic-spline)
+    * [DWA](#dwa)
+    * Model Predictive Trajectory Generator 2
+    * State Lattice Planner                 3
+    * DStar
+* [Path Tracking](#path-tracking)
+    * [Move to Pose](#move-to-pose)
+    * [Stanely Control](#stanley-control)
+    * Model Predictive Control
+* [To do](#to-do)
+
+## Requirments
 - cmake
 - opencv 3.3 
 - Eigen 3
@@ -17,27 +48,48 @@ $ cmake ../
 $ make -j4
 ```
 
+## Localization
+### Extended Kalman Filter
+![Extended Kalman Filter Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/ekf.gif)
+
+
+### Unscented Kalman Filter
+![Unscented Kalman Filter Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/ukf.gif)
+
+We can see error ellipse in this demo is a much better approximation of the true distribution. EKF can be biased and inconsistent. 
+
+### Particle Filter
+WIP
+
+
+## SLAM
+### EKF-SLAM
+
+### FastSLAM
+
+### Graph Slam
+
 
 ## Path Planning
-### DWA Algorithm
+### DWA 
 ![DWA Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/dwa.gif)
 
-### Dijkstra Algorithm
+### Dijkstra 
 ![Dijkstra Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/dijkstra.gif)
 
-### A* Algorithm
+### A* 
 ![A* Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/astar.gif)
 
-### PRM Algorithm
+### PRM 
 ![PRM Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/prm.gif)
 
-### RRT Algorithm
+### RRT 
 ![RRT Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/rrt.gif)
 
-### RRTStar Algorithm
+### RRTStar 
 ![RRTStar Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/rrt_star.gif)
 
-### Potential Field Algorithm
+### Potential Field 
 ![Potential Field Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/potential_field.gif)
 
 ### Quintic Polynomial
@@ -52,19 +104,13 @@ $ make -j4
 ### Move To Pose
 ![Move To Pose Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/move_to_pose.gif)
 
-
+### Stanley Control
 ![Stanely Control Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/stanley_control.gif)
 
 
-## Localization
-### EKF (Extended Kalman Filter)
-![Extended Kalman Filte Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/ekf.gif)
 
 
-### UKF (Unscented Kalman Filter)
-![Unscented Kalman Filte Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/ukf.gif)
 
-We can see error ellipse in this demo is a much better approximation of the true distribution. EKF can be biased and inconsistent. 
 
 ## To Do
 - [X] gnuplot scatter
@@ -81,17 +127,18 @@ We can see error ellipse in this demo is a much better approximation of the true
 - [x] move to pose
 - [x] cubic spline
 - [x] quintic spline
-- [ ] stanley controller
+- [x] stanley controller
+- [ ] particle filtering
+- [ ] EKFSLAM
+- [ ] FAST SLAM
+- [ ] Graph slam
 - [ ] mpc
+- [ ] model predictive trajectory generator
 - [ ] state lattice (do after mpc)
 - [ ] informed rrtstar
 - [ ] batch informed rrtstar
 - [ ] reed shepps path
 - [ ] hybrid A*
-- [ ] particle filtering
-- [ ] EKFSLAM
-- [ ] FAST SLAM
-- [ ] Graph slam
 - [ ] lidar to grip map
 - [ ] frontier exploration 
 - [ ] icp
