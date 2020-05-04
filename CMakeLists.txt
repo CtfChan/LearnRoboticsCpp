@@ -21,7 +21,9 @@ include_directories(include)
 # Create library
 ## Declare a cpp library
 add_library(${PROJECT_NAME}_core
+    src/common.cpp
     src/cubic_spline.cpp
+    src/stanley_control.cpp
 )
 
 
