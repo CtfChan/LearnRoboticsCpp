@@ -70,13 +70,21 @@ int main() {
                     // generate plot
                     Arrow arr = trajectoryToVector(traj);
                     all_arr.insert(all_arr.end(), arr.begin(), arr.end());
+
+                    // reflect over axis
+                    for (auto& y : traj.y) 
+                        y = -y;
+                    Arrow reflect_arr = trajectoryToVector(traj);
+                    all_arr.insert(all_arr.end(), reflect_arr.begin(), reflect_arr.end());
+
+
                 }
 
             }
         }
     }
 
-    std::cout << "table size: " << table.size() << std::endl;
+    std::cout << "Table size: " << table.size() << std::endl;
 
     // show plot
     Gnuplot gp;
