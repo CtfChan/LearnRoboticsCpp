@@ -88,7 +88,7 @@ int main() {
     Gnuplot gp;
 
     gp << "set term gif animate\n";
-    gp << "set output '../animations/mode_predictive_trajectory_generation.gif'\n";
+    gp << "set output '../animations/model_predictive_trajectory_generation.gif'\n";
     gp << "unset key \n";
 
     gp << "plot '-' with vectors \n";
