@@ -14,8 +14,7 @@ float normalizeAngle(float angle) {
     return angle;
 }
 
-std::vector<std::tuple<float, float, float, float>> 
-    poseToVector(float x, float y, float theta, float r) {
+Arrow poseToVector(float x, float y, float theta, float r) {
     float dx = r * std::cos(theta);
     float dy = r * std::sin(theta);
     auto arrow = std::make_tuple(x, y, dx ,dy);

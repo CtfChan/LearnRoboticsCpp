@@ -24,6 +24,7 @@ add_library(${PROJECT_NAME}_core
     src/common.cpp
     src/cubic_spline.cpp
     src/stanley_control.cpp
+    src/move_to_pose.cpp
 )
 
 
@@ -53,20 +54,27 @@ add_executable(potential_field src/potential_field.cpp)
 target_link_libraries(potential_field ${Boost_LIBRARIES})
 
 add_executable(quintic_polynomial src/quintic_polynomial.cpp)
-target_link_libraries(quintic_polynomial ${Boost_LIBRARIES})
+target_link_libraries(quintic_polynomial ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
-add_executable(cubic_spline src/example_cubic_spline.cpp)
+add_executable(cubic_spline examples/example_cubic_spline.cpp)
 target_link_libraries(cubic_spline ${Boost_LIBRARIES}  ${PROJECT_NAME}_core)
+
+add_executable(model_predictive_trajectory_generator
+    examples/example_model_predictive_trajectory_generator.cpp
+)
+target_link_libraries(model_predictive_trajectory_generator 
+    ${Boost_LIBRARIES}  ${PROJECT_NAME}_core
+)
 
 
 ##############################
 #PathTracking
 ##############################
 
-add_executable(move_to_pose src/move_to_pose.cpp)
-target_link_libraries(move_to_pose ${Boost_LIBRARIES})
+add_executable(move_to_pose examples/example_move_to_pose.cpp)
+target_link_libraries(move_to_pose ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
-add_executable(stanley_control src/example_stanley_control.cpp )
+add_executable(stanley_control examples/example_stanley_control.cpp )
 target_link_libraries(stanley_control ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
 

@@ -5,10 +5,14 @@
 #include <vector>
 
 
+using Path = std::vector<std::pair<float, float>>;
+using Arrow = std::vector<std::tuple<float, float, float, float>>;
+
+
+
 float deg2rad(float deg);
 
 // clip angle to [-pi, pi]
 float normalizeAngle(float angle);
 
-std::vector<std::tuple<float, float, float, float>> 
-    poseToVector(float x, float y, float theta, float r=0.5f);
+Arrow poseToVector(float x, float y, float theta, float r=0.5f);

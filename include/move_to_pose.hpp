@@ -4,7 +4,6 @@
 
 #include "gnuplot-iostream.h"
 
-using Path = std::vector<std::pair<float, float>>;
 using Arrow = std::vector<std::tuple<float, float, float, float>>;
 
 struct Control {
@@ -18,14 +17,14 @@ struct Pose {
     float theta;
 };
 
-Arrow poseToArrow(const Pose& p, float arrow_len) {
-    auto arr = std::make_tuple(
-        p.x, 
-        p.y, 
-        arrow_len * std::cos(p.theta),
-        arrow_len * std::sin(p.theta));
-    return { arr };
-}
+// Arrow poseToArrow(const Pose& p, float arrow_len) {
+//     auto arr = std::make_tuple(
+//         p.x, 
+//         p.y, 
+//         arrow_len * std::cos(p.theta),
+//         arrow_len * std::sin(p.theta));
+//     return { arr };
+// }
 
 
 class MoveToPoseController {
