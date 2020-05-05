@@ -25,6 +25,7 @@ add_library(${PROJECT_NAME}_core
     src/cubic_spline.cpp
     src/stanley_control.cpp
     src/move_to_pose.cpp
+    src/trajectory_optimizer.cpp
 )
 
 
@@ -59,12 +60,8 @@ target_link_libraries(quintic_polynomial ${Boost_LIBRARIES} ${PROJECT_NAME}_core
 add_executable(cubic_spline examples/example_cubic_spline.cpp)
 target_link_libraries(cubic_spline ${Boost_LIBRARIES}  ${PROJECT_NAME}_core)
 
-add_executable(model_predictive_trajectory_generator
-    examples/example_model_predictive_trajectory_generator.cpp
-)
-target_link_libraries(model_predictive_trajectory_generator 
-    ${Boost_LIBRARIES}  ${PROJECT_NAME}_core
-)
+add_executable(trajectory_optimizer examples/example_trajectory_optimizer.cpp)
+target_link_libraries(trajectory_optimizer ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
 
 ##############################

@@ -4,25 +4,6 @@
 
 #include <algorithm>
 
-struct BicycleModelRobot {
-    float x;
-    float y;
-    float yaw;
-    float v;
-    float L; // wheelbase
-    float max_steer;
-
-    // acceleration, steering, dt
-    void update(float acc, float delta, float dt) {
-        delta = std::clamp(delta, -max_steer, max_steer);
-        
-        x += v * std::cos(yaw) * dt;
-        y += v * std::sin(yaw) * dt;
-        yaw += v / L * std::tan(delta) * dt;
-        yaw = normalizeAngle(yaw);
-        v += acc * dt;
-    }
-};
 
 
 class StanleyController {
