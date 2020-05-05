@@ -99,7 +99,9 @@ WIP
 ### Cubic Spline
 ![Cubic Spline Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/cubic_spline.gif)
  
-
+### Model Predictive Trajectory Generation
+![ Model Predictive Trajectory Generation](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/model_predictive_trajectory_generation.gif)
+ 
 
 ## Path Tracking
 ### Move To Pose
@@ -134,8 +136,8 @@ WIP
 - [ ] FAST SLAM
 - [ ] Graph slam
 - [ ] mpc
-- [ ] model predictive trajectory generator
-- [ ] state lattice (do after mpc)
+- [x] model predictive trajectory generator
+- [ ] state lattice (do after above)
 - [ ] informed rrtstar
 - [ ] batch informed rrtstar
 - [ ] reed shepps path
