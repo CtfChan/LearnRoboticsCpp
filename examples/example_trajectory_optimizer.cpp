@@ -1,7 +1,6 @@
 #include "trajectory_optimizer.hpp"
 #include "common.hpp"
 
-// #include "gnuplot-iostream.h"
 
 int main() {
     Gnuplot gp;

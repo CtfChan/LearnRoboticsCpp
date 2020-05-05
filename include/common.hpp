@@ -40,3 +40,11 @@ float normalizeAngle(float angle);
 
 // for visualization
 Arrow poseToVector(float x, float y, float theta, float r=0.5f);
+
+Arrow trajectoryToVector(Pose2DTrajectory& traj);
+
+
+// takes in 3 2D points, returns coefficients (a, b, c) where y = ax^2 + bx + c
+std::array<float, 3> quadraticCoefficients(std::array<float, 3>& x, std::array<float, 3>& y);
+
+float quadraticInterpolation(std::array<float, 3>& coeff, float x);

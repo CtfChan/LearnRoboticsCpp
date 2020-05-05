@@ -2,22 +2,6 @@
 
 #include <iostream>
 
-std::array<float, 3> quadraticCoefficients(std::array<float, 3>& x, std::array<float, 3>& y) {
-    Eigen::Matrix3f A;
-    Eigen::Vector3f b;
-    A << std::pow(x[0], 2), x[0], 1,
-        std::pow(x[1], 2), x[1], 1,
-        std::pow(x[2], 2), x[2], 1;
-    b << y[0], y[1], y[2];
-
-    Eigen::Vector3f coeffs = A.inverse() * b;
-    
-    return {coeffs[0] , coeffs[1], coeffs[2]};
-}
-
-float quadraticInterpolation(std::array<float, 3>& coeff, float x) {
-    return coeff[0] * std::pow(x, 2) + coeff[1] * x + coeff[2];
-}
 
 
 TrajectoryOptimizer::TrajectoryOptimizer(BicycleModelRobot& state, size_t max_iter, float cost_th, 
@@ -38,9 +22,8 @@ Pose2DTrajectory TrajectoryOptimizer::optimizeTrajectory(Pose2D& target_pose, Tr
         Pose2D final_pose {traj.x.back(), traj.y.back(), traj.theta.back()};
         Eigen::Vector3f d = calculatePoseErrorVector(target_pose, final_pose);
         float cost = d.norm();
-        std::cout << "final_pose: " << final_pose.x << " " << final_pose.y << " " << final_pose.theta << std::endl;
-
-        std::cout << "current cost " << cost << std::endl;
+        // std::cout << "final_pose: " << final_pose.x << " " << final_pose.y << " " << final_pose.theta << std::endl;
+        // std::cout << "current cost " << cost << std::endl;
 
         gp << "plot '-' with line \n";
         gp.send1d(boost::make_tuple(traj.x, traj.y));
@@ -61,15 +44,39 @@ Pose2DTrajectory TrajectoryOptimizer::optimizeTrajectory(Pose2D& target_pose, Tr
         // std::cout << "alpha: " << alpha << std::endl;
         // std::cout << "params: " << params.s  << " " << params.km << " " << params.kf << std::endl;
 
-        std::cout << "dp: " << dp << std::endl;
-        std::cout << "jacob: " << J  << std::endl;
+        // std::cout << "dp: " << dp << std::endl;
+        // std::cout << "jacob: " << J  << std::endl;
 
     }
 
+    return traj;
+}
 
+
+Pose2DTrajectory TrajectoryOptimizer::optimizeTrajectory(Pose2D& target_pose, TrajectoryParam& params, float k0) {
+    Pose2DTrajectory traj;
+
+    for (size_t i = 0; i < max_iter_; ++i) {
+        traj = generateTrajectory(params, k0);
+        Pose2D final_pose {traj.x.back(), traj.y.back(), traj.theta.back()};
+        Eigen::Vector3f d = calculatePoseErrorVector(target_pose, final_pose);
+        float cost = d.norm();
+        if (cost < cost_th_) {
+            std::cout << "Trajectory found!" << std::endl;
+            break;
+        }
+
+        Eigen::Matrix3f J = calculateJacobian(target_pose, params, k0);
+        Eigen::Vector3f dp = - J.inverse() * d;
+        float alpha = selectLearningParam(target_pose, params, k0, dp);
+        params.s += alpha * dp(0);
+        params.km += alpha * dp(1);
+        params.kf += alpha * dp(2);
+    }
 
     return traj;
 }
+
 
 float TrajectoryOptimizer::selectLearningParam(Pose2D& target_pose, TrajectoryParam params, float k0, Eigen::Vector3f& dp) {
     float min_cost = std::numeric_limits<float>::max();
@@ -158,11 +165,11 @@ Pose2DTrajectory TrajectoryOptimizer::generateTrajectory(TrajectoryParam& params
     std::array<float, 3> yk = {k0, params.km, params.kf};
     std::array<float, 3> coeff = quadraticCoefficients(xk, yk);
 
-    std::cout << "x: " << xk[0] << " " << xk[1] << " " << xk[2] << std::endl;
-    std::cout << "y: " << yk[0] << " " << yk[1] << " " << yk[2] << std::endl;
-    std::cout << "coeff: " << coeff[0] <<  " "  << coeff[1] << " " << coeff[2] << std::endl;
-    std::cout << "n : " << n <<  std::endl;
-    std::cout << "time_horizon: " << time_horizon << std::endl;
+    // std::cout << "x: " << xk[0] << " " << xk[1] << " " << xk[2] << std::endl;
+    // std::cout << "y: " << yk[0] << " " << yk[1] << " " << yk[2] << std::endl;
+    // std::cout << "coeff: " << coeff[0] <<  " "  << coeff[1] << " " << coeff[2] << std::endl;
+    // std::cout << "n : " << n <<  std::endl;
+    // std::cout << "time_horizon: " << time_horizon << std::endl;
 
 
     for (float t = 0.f; t < time_horizon; t += dt) {

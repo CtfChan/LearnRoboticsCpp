@@ -63,6 +63,9 @@ target_link_libraries(cubic_spline ${Boost_LIBRARIES}  ${PROJECT_NAME}_core)
 add_executable(trajectory_optimizer examples/example_trajectory_optimizer.cpp)
 target_link_libraries(trajectory_optimizer ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
+add_executable(lookup_table_generation examples/example_lookup_table_generation.cpp)
+target_link_libraries(lookup_table_generation ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+
 
 ##############################
 #PathTracking

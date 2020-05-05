@@ -4,17 +4,13 @@
 #include <Eigen/Eigen>
 
 
+
 // assume quadratic param, this is our p vector
 struct TrajectoryParam {
     float s; // path length (this stays fixed during optimization)
     float km; //steer in the middle
     float kf;// final steer
 };
-
-// takes in 3 2D points, returns coefficients (a, b, c) where y = ax^2 + bx + c
-std::array<float, 3> quadraticCoefficients(std::array<float, 3>& x, std::array<float, 3>& y);
-
-float quadraticInterpolation(std::array<float, 3>& coeff, float x);
 
 // assumes constant velocity
 // designed to optimize trajectory for bicycle model robot to nearby points
@@ -27,6 +23,10 @@ public:
     // takes in target pose, initial guess of params, initial steer (this is fixed)
     // outputs first trajectory that fits within cost limits
     Pose2DTrajectory optimizeTrajectory(Pose2D& target_pose, TrajectoryParam params, float k0, Gnuplot& gp);
+
+    // this one does not plot and modifies params by reference
+    Pose2DTrajectory optimizeTrajectory(Pose2D& target_pose, TrajectoryParam& params, float k0);
+
 
 private:
     // use quadratic interpolation to generate a trajectory given some (s, km, kf)
