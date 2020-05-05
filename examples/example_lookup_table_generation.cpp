@@ -55,6 +55,7 @@ int main() {
         for (float y = miny; y < maxy; y += dy) {
             for (float x = minx; x < maxx; x += dx) {
                 Pose2D target_pose{x, y, yaw};
+
                 TableEntry entry = findClosestEntry(table, x, y, yaw);
                 
                 // use closest entry as initial guess, p = (path len, middle_steer, final_steer)
@@ -71,13 +72,10 @@ int main() {
                     Arrow arr = trajectoryToVector(traj);
                     all_arr.insert(all_arr.end(), arr.begin(), arr.end());
 
-                    // reflect over axis
-                    for (auto& y : traj.y) 
-                        y = -y;
+                    // reflect over x-axis
+                    for (auto& y : traj.y) y = -y;
                     Arrow reflect_arr = trajectoryToVector(traj);
                     all_arr.insert(all_arr.end(), reflect_arr.begin(), reflect_arr.end());
-
-
                 }
 
             }
@@ -88,8 +86,15 @@ int main() {
 
     // show plot
     Gnuplot gp;
+
+    gp << "set term gif animate\n";
+    gp << "set output '../animations/mode_predictive_trajectory_generation.gif'\n";
+    gp << "unset key \n";
+
     gp << "plot '-' with vectors \n";
     gp.send1d(all_arr);
+
+    gp << "set output\n";
 
 
     // save to CSV
