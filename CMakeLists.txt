@@ -26,6 +26,7 @@ add_library(${PROJECT_NAME}_core
     src/stanley_control.cpp
     src/move_to_pose.cpp
     src/trajectory_optimizer.cpp
+    src/state_lattice.cpp
 )
 
 
@@ -65,6 +66,9 @@ target_link_libraries(trajectory_optimizer ${Boost_LIBRARIES} ${PROJECT_NAME}_co
 
 add_executable(lookup_table_generation examples/example_lookup_table_generation.cpp)
 target_link_libraries(lookup_table_generation ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+
+add_executable(state_lattice examples/example_state_lattice.cpp)
+target_link_libraries(state_lattice ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
 
 ##############################

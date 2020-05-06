@@ -4,6 +4,16 @@
 #include <Eigen/Eigen>
 
 
+// For lookuptable 
+struct TableEntry {
+    float x;
+    float y;
+    float yaw;
+    float s;
+    float km;
+    float kf;
+};
+TableEntry findClosestEntry(const std::vector<TableEntry>& table, float x, float y, float yaw);
 
 // assume quadratic param, this is our p vector
 struct TrajectoryParam {
@@ -11,6 +21,7 @@ struct TrajectoryParam {
     float km; //steer in the middle
     float kf;// final steer
 };
+
 
 // assumes constant velocity
 // designed to optimize trajectory for bicycle model robot to nearby points

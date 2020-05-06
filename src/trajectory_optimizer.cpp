@@ -2,6 +2,20 @@
 
 #include <iostream>
 
+TableEntry findClosestEntry(const std::vector<TableEntry>& table, float x, float y, float yaw) {
+    auto closest = std::min_element(table.begin(), table.end(), [&]
+    (const auto& e1, const auto& e2) {
+        float dx1 = e1.x - x, dy1 = e1.y - y, dyaw1 = e1.yaw - yaw;
+        float dx2 = e2.x - x, dy2 = e2.y - y, dyaw2 = e2.yaw - yaw;
+        float c1 = std::pow(dx1, 2) + std::pow(dy1, 2) + std::pow(dyaw1, 2);
+        float c2 = std::pow(dx2, 2) + std::pow(dy2, 2) + std::pow(dyaw2, 2);
+        return c1 < c2;
+    });
+
+    return *closest;
+}
+
+
 
 
 TrajectoryOptimizer::TrajectoryOptimizer(BicycleModelRobot& state, size_t max_iter, float cost_th, 
@@ -11,9 +25,6 @@ TrajectoryOptimizer::TrajectoryOptimizer(BicycleModelRobot& state, size_t max_it
 
 }
 
-
-
-  
 Pose2DTrajectory TrajectoryOptimizer::optimizeTrajectory(Pose2D& target_pose, TrajectoryParam params, float k0, Gnuplot& gp) {
     Pose2DTrajectory traj;
 
