@@ -105,10 +105,11 @@ WIP
 
 ### State Lattice
 <p float="left">
-  <img src="https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/uniform_sampling.png" width="100" />
-  <img src="https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/biased_sampling.png" width="100" /> 
-  <img src="https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/lane_sampling.png" width="100" />
+  <img src="https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/uniform_sampling.png" width="300" />
+  <img src="https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/biased_sampling.png" width="300" /> 
+  <img src="https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/lane_sampling.png" width="300" />
 </p>
+Left to right: uniform, biased, lane sampling
 
 ## Path Tracking
 ### Move To Pose
