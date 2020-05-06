@@ -103,6 +103,13 @@ WIP
 ![ Model Predictive Trajectory Generation](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/model_predictive_trajectory_generation.gif)
  
 
+### State Lattice
+<p float="left">
+  <img src="https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/uniform_sampling.png" width="100" />
+  <img src="https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/biased_sampling.png" width="100" /> 
+  <img src="https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/lane_sampling.png" width="100" />
+</p>
+
 ## Path Tracking
 ### Move To Pose
 ![Move To Pose Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/move_to_pose.gif)

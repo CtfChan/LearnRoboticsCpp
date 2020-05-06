@@ -232,7 +232,7 @@ void laneStateSamplingExample1() {
     Gnuplot gp;
     gp << "set term png\n";
 
-    gp << "set output '../animations/lane_sampling1.png'\n";
+    gp << "set output '../animations/lane_sampling.png'\n";
 
     gp << "unset key \n";
     gp << "plot '-' with vectors \n";
