@@ -46,8 +46,6 @@ public:
 private:
     float gaussianLikelihood(float x, float mean, float sigma);
 
-    void resample();
-
     Eigen::MatrixXf particles_;
     Eigen::VectorXf weights_;
 

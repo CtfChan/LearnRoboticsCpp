@@ -75,9 +75,9 @@ int main() {
     Path obs_path;
     Path est_path;
 
-    // gp << "set size ratio 1.0\n";
-    // gp << "set term gif animate\n";
-    // gp << "set output '../animations/particle_filter.gif'\n";
+    gp << "set size ratio 1.0\n";
+    gp << "set term gif animate\n";
+    gp << "set output '../animations/particle_filter.gif'\n";
     gp << "set xrange [-15:15]\nset yrange [-5:25]\n";
 
 
@@ -115,23 +115,14 @@ int main() {
         auto pf_cov = pf.getCov();
         est_path.emplace_back(pf_state(0), pf_state(1));
 
-        std::cout << "state: " << std::endl;
-        std::cout << pf_state << std::endl;
-
-        std::cout << "cov: " << std::endl;
-        std::cout << pf_cov << std::endl;
-
-
-
-        // // draw landmark observations
-        // Ellipse error_ellipse = generateEllipse(pf_state, pf_cov);
+        // draw landmark observations
+        Ellipse error_ellipse = generateEllipse(pf_state, pf_cov);
 
         // generate landmark correspondence
         Arrow corr;
         for (auto [d, x, y]: curr_z) {
             float dx = x-x_GT(0);
             float dy =  y - x_GT(1);
-            std::cout << dx << " " << dy << std::endl;
             corr.emplace_back(x_GT(0), x_GT(1), dx , dy);
         }
 
@@ -139,19 +130,20 @@ int main() {
                     "'-' with lines title 'odometry' ,"
                     "'-' title 'landmarks',"
                     "'-' with vectors title 'observation' lw 2,"
-                    "'-' with lines title 'filter'\n";
+                    "'-' with lines title 'filter',"
+                    "'-' with lines title 'uncertainty'\n";
         gp.send1d(gt_path);
         gp.send1d(dr_path);
         gp.send1d(rf_id_plot);
         gp.send1d(corr);
         gp.send1d(est_path);
-        //         gp.send1d(error_ellipse);
+        gp.send1d(error_ellipse);
 
 
 
     }
 
-    // gp << "set output\n";
+    gp << "set output\n";
 
 
 

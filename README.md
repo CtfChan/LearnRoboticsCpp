@@ -111,6 +111,7 @@ Left to right: uniform, biased, lane sampling
 We can see error ellipse in this demo is a much better approximation of the true distribution. EKF can be biased and inconsistent. 
 
 ### Particle Filter
+![Particle Filter Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/particle_filter.gif)
 
 
 
