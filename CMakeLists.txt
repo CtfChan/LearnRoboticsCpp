@@ -22,7 +22,10 @@ include_directories(include)
 ## Declare a cpp library
 add_library(${PROJECT_NAME}_core
     src/common.cpp
-    src/filters.cpp
+    src/localization/filters.cpp
+    src/localization/ekf.cpp
+    src/localization/ukf.cpp
+    src/localization/particle_filter.cpp
     src/cubic_spline.cpp
     src/stanley_control.cpp
     src/move_to_pose.cpp
@@ -87,12 +90,12 @@ target_link_libraries(stanley_control ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 #Localization
 ##############################
 
-add_executable(ekf src/ekf.cpp)
-target_link_libraries(ekf ${Boost_LIBRARIES})
+add_executable(ekf examples/localization/example_ekf.cpp)
+target_link_libraries(ekf ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
-add_executable(ukf src/ukf.cpp)
-target_link_libraries(ukf ${Boost_LIBRARIES})
+add_executable(ukf examples/localization/example_ukf.cpp)
+target_link_libraries(ukf ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
-add_executable(particle_filter examples/example_particle_filter.cpp)
+add_executable(particle_filter examples/localization/example_particle_filter.cpp)
 target_link_libraries(particle_filter ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 

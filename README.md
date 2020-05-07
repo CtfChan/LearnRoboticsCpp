@@ -142,9 +142,8 @@ We can see error ellipse in this demo is a much better approximation of the true
 - [x] stanley controller
 - [x] model predictive trajectory generator
 - [x] state lattice (do after above)
-- [ ] particle filtering
-- [ ] histogram
-- [ ] cleanup filters and consolidate into one header
+- [x] particle filtering
+- [ ] cleanup filters and consolidate common funct one header
 - [ ] use Pose2D instead of pose in a lot of places
 - [ ] mpc
 - [ ] EKFSLAM
