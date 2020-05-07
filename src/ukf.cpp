@@ -259,16 +259,16 @@ int main(){
         // // generate error ellipse
         Ellipse error_ellipse = generateEllipse(x_est, P_est);
 
-        gp << "plot '-' title 'ground truth' with lines,"
-                    "'-' title 'odometry' with lines,"
-                    "'-' title 'observation',"
-                    "'-' title 'covariance' with lines,"
-                    "'-' title 'filter' with lines\n";
-        gp.send1d(gt_path);
-        gp.send1d(dr_path);
-        gp.send1d(obs_path);
-        gp.send1d(error_ellipse);
-        gp.send1d(est_path);
+        // gp << "plot '-' title 'ground truth' with lines,"
+        //             "'-' title 'odometry' with lines,"
+        //             "'-' title 'observation',"
+        //             "'-' title 'covariance' with lines,"
+        //             "'-' title 'filter' with lines\n";
+        // gp.send1d(gt_path);
+        // gp.send1d(dr_path);
+        // gp.send1d(obs_path);
+        // gp.send1d(error_ellipse);
+        // gp.send1d(est_path);
         // sleep(0.2);        
 
     }

@@ -12,17 +12,17 @@ int main() {
     // PF specific parms
     float max_range = 20.f; // maximum range of id
     int num_particles = 100; // number of particles
-    // std::vector<std::pair<float, float> > rf_ids = {
-    //     {10.f, 0.f},
-    //     {10.f, 10.f},
-    //     {0.f, 15.f},
-    //     {-5.f, 20.f}
-    // };
     Eigen::Matrix<float, 4, 2> rf_ids;
     rf_ids << 10.0f, 0.0f,
               10.0f, 10.0f,
                0.0f, 15.0f,
               -5.0f, 20.0f;
+    std::vector<std::pair<float, float>> rf_id_plot = {
+        {10.0f, 0.0f},
+        {10.0f, 10.0f},
+        {0.0f, 15.0f},
+        {-5.0f, 20.0f}
+    };
 
 
     // control input (v, w) will be constant 
@@ -66,7 +66,7 @@ int main() {
     std::normal_distribution<> gaussian(0, 1);
 
     // initialize filter
-    ParticleFilter pf(x_est, P_est, num_particles);
+    ParticleFilter pf(x_est, P_est, R, Q, dt, num_particles);
 
     // initialize plot
     Gnuplot gp;
@@ -78,6 +78,7 @@ int main() {
     // gp << "set size ratio 1.0\n";
     // gp << "set term gif animate\n";
     // gp << "set output '../animations/particle_filter.gif'\n";
+    gp << "set xrange [-15:15]\nset yrange [-5:25]\n";
 
 
     float time = 0.f;
@@ -99,19 +100,58 @@ int main() {
         std::vector<LandmarkObserveration> curr_z;
         for (size_t i = 0; i < rf_ids.rows(); ++i) {
             Eigen::Vector2f pos = rf_ids.row(i);
-            float d = (x_est.head(2) - pos).norm();
+            float d = (x_GT.head(2) - pos).norm();
             if (d <= max_range) {
                 float dn = d + gaussian(generator) * Qsim;
                 LandmarkObserveration obs{dn, pos(0), pos(1)};
                 curr_z.push_back(obs);
             }
         }
+
         
+        // particle filter
         pf.step(curr_z, ud);
+        auto pf_state = pf.getState();
+        auto pf_cov = pf.getCov();
+        est_path.emplace_back(pf_state(0), pf_state(1));
+
+        std::cout << "state: " << std::endl;
+        std::cout << pf_state << std::endl;
+
+        std::cout << "cov: " << std::endl;
+        std::cout << pf_cov << std::endl;
+
+
+
+        // // draw landmark observations
+        // Ellipse error_ellipse = generateEllipse(pf_state, pf_cov);
+
+        // generate landmark correspondence
+        Arrow corr;
+        for (auto [d, x, y]: curr_z) {
+            float dx = x-x_GT(0);
+            float dy =  y - x_GT(1);
+            std::cout << dx << " " << dy << std::endl;
+            corr.emplace_back(x_GT(0), x_GT(1), dx , dy);
+        }
+
+        gp << "plot '-' with lines title 'ground truth',"
+                    "'-' with lines title 'odometry' ,"
+                    "'-' title 'landmarks',"
+                    "'-' with vectors title 'observation' lw 2,"
+                    "'-' with lines title 'filter'\n";
+        gp.send1d(gt_path);
+        gp.send1d(dr_path);
+        gp.send1d(rf_id_plot);
+        gp.send1d(corr);
+        gp.send1d(est_path);
+        //         gp.send1d(error_ellipse);
+
 
 
     }
 
+    // gp << "set output\n";
 
 
 

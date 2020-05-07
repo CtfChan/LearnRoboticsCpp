@@ -35,7 +35,7 @@ struct LandmarkObserveration {
 class ParticleFilter {
 public:
     ParticleFilter(Eigen::Vector4f& init_state, Eigen::Matrix4f& init_cov,
-                   Eigen::Matrix2f& R, float Q, int num_particles);
+                   Eigen::Matrix2f& R, float Q, float dt, int num_particles);
 
     void step(std::vector<LandmarkObserveration>& z, Eigen::Vector2f& u);
 
@@ -44,6 +44,7 @@ public:
     const Eigen::Matrix4f getCov() const;
 
 private:
+    float gaussianLikelihood(float x, float mean, float sigma);
 
     void resample();
 
@@ -55,6 +56,8 @@ private:
 
     Eigen::Matrix2f& R_;
     float Q_;
+
+    float dt_;
 
     std::random_device rd_gauss_;
     std::mt19937 gen_gauss_;
