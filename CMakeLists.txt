@@ -22,6 +22,7 @@ include_directories(include)
 ## Declare a cpp library
 add_library(${PROJECT_NAME}_core
     src/common.cpp
+    src/filters.cpp
     src/cubic_spline.cpp
     src/stanley_control.cpp
     src/move_to_pose.cpp
@@ -91,4 +92,7 @@ target_link_libraries(ekf ${Boost_LIBRARIES})
 
 add_executable(ukf src/ukf.cpp)
 target_link_libraries(ukf ${Boost_LIBRARIES})
+
+add_executable(particle_filter examples/example_particle_filter.cpp)
+target_link_libraries(particle_filter ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 

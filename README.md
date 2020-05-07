@@ -9,7 +9,7 @@ This repository contains my implementations of classical robotics algorithms in 
 * [Localization](#localization)
     * [Extended Kalman Filter](#extended-kalman-filter)
     * [Unscented Kalman Filter](#unscented-kalman-filter)
-    * Particle Filter 1
+    * [Particle Filter](#particle-filter)
 * [SLAM](#slam)
     * ICP 
     * EKF-SLAM 
@@ -25,8 +25,8 @@ This repository contains my implementations of classical robotics algorithms in 
     * [Quintic Polynomial](#quintic-polynomial)
     * [Cubic Spline](#cubic-spline)
     * [DWA](#dwa)
-    * Model Predictive Trajectory Generator 2
-    * State Lattice Planner                 3
+    * [Model Predictive Trajectory Generator](#model-predictive-trajectory-generator)
+    * [State Lattice Planner](#state-lattice-planner)                 
     * DStar
 * [Path Tracking](#path-tracking)
     * [Move to Pose](#move-to-pose)
@@ -49,26 +49,7 @@ $ cmake ../
 $ make -j4
 ```
 
-## Localization
-### Extended Kalman Filter
-![Extended Kalman Filter Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/ekf.gif)
 
-
-### Unscented Kalman Filter
-![Unscented Kalman Filter Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/ukf.gif)
-
-We can see error ellipse in this demo is a much better approximation of the true distribution. EKF can be biased and inconsistent. 
-
-### Particle Filter
-WIP
-
-
-## SLAM
-### EKF-SLAM
-
-### FastSLAM
-
-### Graph Slam
 
 
 ## Path Planning
@@ -103,7 +84,7 @@ WIP
 ![ Model Predictive Trajectory Generation](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/model_predictive_trajectory_generation.gif)
  
 
-### State Lattice
+### State Lattice Planner
 <p float="left">
   <img src="https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/uniform_sampling.png" width="300" />
   <img src="https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/biased_sampling.png" width="300" /> 
@@ -119,7 +100,26 @@ Left to right: uniform, biased, lane sampling
 ![Stanely Control Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/stanley_control.gif)
 
 
+## Localization
+### Extended Kalman Filter
+![Extended Kalman Filter Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/ekf.gif)
 
+
+### Unscented Kalman Filter
+![Unscented Kalman Filter Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/ukf.gif)
+
+We can see error ellipse in this demo is a much better approximation of the true distribution. EKF can be biased and inconsistent. 
+
+### Particle Filter
+
+
+
+## SLAM
+### EKF-SLAM
+
+### FastSLAM
+
+### Graph Slam
 
 
 
@@ -139,13 +139,16 @@ Left to right: uniform, biased, lane sampling
 - [x] cubic spline
 - [x] quintic spline
 - [x] stanley controller
+- [x] model predictive trajectory generator
+- [x] state lattice (do after above)
 - [ ] particle filtering
+- [ ] histogram
+- [ ] cleanup filters and consolidate into one header
+- [ ] use Pose2D instead of pose in a lot of places
+- [ ] mpc
 - [ ] EKFSLAM
 - [ ] FAST SLAM
 - [ ] Graph slam
-- [ ] mpc
-- [x] model predictive trajectory generator
-- [ ] state lattice (do after above)
 - [ ] informed rrtstar
 - [ ] batch informed rrtstar
 - [ ] reed shepps path

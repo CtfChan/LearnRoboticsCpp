@@ -8,6 +8,11 @@
 using Path = std::vector<std::pair<float, float>>;
 using Arrow = std::vector<std::tuple<float, float, float, float>>;
 
+struct Point2D {
+    float x;
+    float y;
+};
+
 struct Pose2D {
     float x;
     float y;
