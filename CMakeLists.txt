@@ -14,7 +14,6 @@ find_package(Eigen3 REQUIRED)
 find_package(OpenCV REQUIRED)
 find_package(Boost 1.40.0 COMPONENTS filesystem system iostreams REQUIRED)
 
-
 include_directories(${EIGEN3_INCLUDE_DIR})
 include_directories(include)
 
@@ -26,12 +25,16 @@ add_library(${PROJECT_NAME}_core
     src/localization/ekf.cpp
     src/localization/ukf.cpp
     src/localization/particle_filter.cpp
+    src/path_tracking/mpc.cpp
     src/cubic_spline.cpp
     src/stanley_control.cpp
     src/move_to_pose.cpp
     src/trajectory_optimizer.cpp
     src/state_lattice.cpp
 )
+
+
+
 
 
 ##############################
@@ -84,6 +87,9 @@ target_link_libraries(move_to_pose ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
 add_executable(stanley_control examples/example_stanley_control.cpp )
 target_link_libraries(stanley_control ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+
+add_executable(mpc examples/path_tracking/example_mpc.cpp)
+target_link_libraries(mpc ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
 
 ##############################

@@ -40,6 +40,10 @@ This repository contains my implementations of classical robotics algorithms in 
 - Eigen 3
 - Boost 1.4
 - gnuplot
+- ipoptd (this one is a pickle, TODO add instr.)
+sudo apt-get install cppad
+
+
 
 ## Build
 ```console
@@ -48,6 +52,7 @@ $ cd build
 $ cmake ../
 $ make -j4
 ```
+
 
 
 
@@ -143,9 +148,11 @@ We can see error ellipse in this demo is a much better approximation of the true
 - [x] model predictive trajectory generator
 - [x] state lattice (do after above)
 - [x] particle filtering
-- [ ] cleanup filters and consolidate common funct one header
-- [ ] use Pose2D instead of pose in a lot of places
+- [x] cleanup filters and consolidate common funct one header
 - [ ] mpc
+- [ ] use Pose2D instead of pose in a lot of places
+- [ ] consolidate path trackers
+- [ ] consolidate path planning algos
 - [ ] EKFSLAM
 - [ ] FAST SLAM
 - [ ] Graph slam

@@ -4,7 +4,6 @@
 #include <tuple>
 #include <vector>
 
-
 using Path = std::vector<std::pair<float, float>>;
 using Arrow = std::vector<std::tuple<float, float, float, float>>;
 
@@ -32,6 +31,13 @@ struct BicycleModelRobot {
     float v;
     float L; // wheelbase
     float max_steer;
+    float min_speed;
+    float max_speed;
+
+    BicycleModelRobot(float _x, float _y, float _yaw, 
+                    float _v, float _L, float _max_steer, 
+                    float _min_speed=std::numeric_limits<float>::min(), 
+                    float _max_speed=std::numeric_limits<float>::max());
 
     // update state acceleration, steering, dt
     void update(float acc, float delta, float dt);
