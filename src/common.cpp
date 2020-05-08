@@ -8,10 +8,11 @@
 
 BicycleModelRobot::BicycleModelRobot(float _x, float _y, float _yaw, 
                 float _v, float _L, float _max_steer, 
-                float _min_speed, float _max_speed ) :
+                float _min_speed, float _max_speed, float _max_accel ) :
                 x(_x), y(_y), yaw(_yaw), v(_v), L(_L), 
                 max_steer(_max_steer),
-                min_speed(_min_speed), max_speed(_max_speed) {}
+                min_speed(_min_speed), max_speed(_max_speed), 
+                max_accel(_max_accel) {}
 
 
 void BicycleModelRobot::update(float acc, float delta, float dt) {

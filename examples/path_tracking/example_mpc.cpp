@@ -29,14 +29,13 @@ int main() {
     float target_speed = 10.0f / 3.6f;
     std::vector<float> vel_prof = calculateSpeedProfile(cx, cy, cyaw, target_speed);
 
-    float max_accel = 1.f;
-
     float L = 2.5f; //m
     float max_steer = deg2rad(45.f);
     float max_speed = 55.f / 3.6f;
     float min_speed = -20.f / 3.6f;
+    float max_accel = 1.f;
     BicycleModelRobot state{cx[0], cy[0], cyaw[0], vel_prof[0], 
-                            L, max_steer, min_speed, max_speed};
+                        L, max_steer, min_speed, max_speed, max_accel};
 
     // smooth yaws, ensure delta between yaws is acute
     smoothYaw(cyaw);

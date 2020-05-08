@@ -24,25 +24,26 @@ size_t calculateNearestIndex(BicycleModelRobot& state, std::vector<float>& x,
 class FG_EVAL{
 public:
 
-    FG_EVAL(Eigen::MatrixXf traj_ref) : traj_ref_(traj_ref) {}
+    // FG_EVAL(Eigen::MatrixXf traj_ref) : traj_ref_(traj_ref) {}
+    FG_EVAL(Eigen::MatrixXf traj_ref, float dt, float L);
 
     void operator()(ADvector& fg, const ADvector& vars);
 
 private:
-    Eigen::MatrixXf traj_ref_;
-
-
+    Eigen::MatrixXf traj_ref_; 
+    float dt_;
+    float L_;
 };
 
 
-class ModelPredictiveController {
-public:
+// class ModelPredictiveController {
+// public:
 
 
-private:
+// private:
 
-    // trajectory to follow
-    std::vector<float> cx_, cy_, cyaw_;
+//     // trajectory to follow
+//     std::vector<float> cx_, cy_, cyaw_;
 
 
-};
+// };
