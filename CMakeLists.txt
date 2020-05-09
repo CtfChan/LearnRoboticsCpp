@@ -17,6 +17,12 @@ find_package(Boost 1.40.0 COMPONENTS filesystem system iostreams REQUIRED)
 include_directories(${EIGEN3_INCLUDE_DIR})
 include_directories(include)
 
+include_directories(/usr/local/include)
+link_directories(/usr/local/lib)
+
+# include_directories(/home/tai/Software/Ipopt-3.12.13/build/include)
+# link_directories(/home/tai/Software/Ipopt-3.12.13/build/lib)
+
 # Create library
 ## Declare a cpp library
 add_library(${PROJECT_NAME}_core
@@ -89,7 +95,7 @@ add_executable(stanley_control examples/example_stanley_control.cpp )
 target_link_libraries(stanley_control ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
 add_executable(mpc examples/path_tracking/example_mpc.cpp)
-target_link_libraries(mpc ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+target_link_libraries(mpc ${Boost_LIBRARIES} ${PROJECT_NAME}_core ipopt)
 
 
 ##############################
