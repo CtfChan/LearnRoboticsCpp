@@ -31,7 +31,7 @@ This repository contains my implementations of classical robotics algorithms in 
 * [Path Tracking](#path-tracking)
     * [Move to Pose](#move-to-pose)
     * [Stanely Control](#stanley-control)
-    * Model Predictive Control
+    * [Model Predictive Control](#model-predictive-control)
 * [To do](#to-do)
 
 ## Requirments

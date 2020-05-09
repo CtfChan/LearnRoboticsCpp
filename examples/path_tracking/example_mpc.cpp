@@ -1,6 +1,6 @@
 
 
-#include "cubic_spline.hpp"
+#include "path_planning/cubic_spline.hpp"
 #include "common.hpp"
 #include "path_tracking/mpc.hpp"
 #include "gnuplot-iostream.h"

@@ -1,4 +1,4 @@
-#include "cubic_spline.hpp"
+#include "path_planning/cubic_spline.hpp"
 
 #include <numeric>
 #include <iostream>

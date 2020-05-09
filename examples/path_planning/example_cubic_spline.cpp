@@ -1,5 +1,5 @@
 #include "gnuplot-iostream.h"
-#include "cubic_spline.hpp"
+#include "path_planning/cubic_spline.hpp"
 
 int main() {
     std::vector<float> x = {-2.5f, 0.0f, 2.5f, 5.0f, 7.5f, 3.0f, -1.0f};

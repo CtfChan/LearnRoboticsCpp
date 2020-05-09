@@ -25,18 +25,22 @@ link_directories(/usr/local/lib)
 ## Declare a cpp library
 add_library(${PROJECT_NAME}_core
     src/common.cpp
+    # localization
     src/localization/filters.cpp
     src/localization/ekf.cpp
     src/localization/ukf.cpp
     src/localization/particle_filter.cpp
+    
+    # path tracking
     src/path_tracking/mpc.cpp
     src/path_tracking/move_to_pose.cpp
     src/path_tracking/stanley_control.cpp
+
+    # path planning
     src/path_planning/quintic_polynomial.cpp
     src/path_planning/trajectory_optimizer.cpp
     src/path_planning/state_lattice.cpp
-    src/cubic_spline.cpp
-
+    src/path_planning/cubic_spline.cpp
 )
 
 
@@ -71,7 +75,7 @@ target_link_libraries(potential_field ${Boost_LIBRARIES})
 add_executable(quintic_polynomial examples/path_planning/example_quintic_polynomial.cpp)
 target_link_libraries(quintic_polynomial ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
-add_executable(cubic_spline examples/example_cubic_spline.cpp)
+add_executable(cubic_spline examples/path_planning/example_cubic_spline.cpp)
 target_link_libraries(cubic_spline ${Boost_LIBRARIES}  ${PROJECT_NAME}_core)
 
 add_executable(trajectory_optimizer examples/path_planning/example_trajectory_optimizer.cpp)

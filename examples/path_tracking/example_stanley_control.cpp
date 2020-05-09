@@ -1,5 +1,5 @@
 #include "path_tracking/stanley_control.hpp"
-#include "cubic_spline.hpp"
+#include "path_planning/cubic_spline.hpp"
 
 #include "gnuplot-iostream.h"
 
