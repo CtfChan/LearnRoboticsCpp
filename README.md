@@ -104,6 +104,9 @@ Left to right: uniform, biased, lane sampling
 ### Stanley Control
 ![Stanely Control Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/stanley_control.gif)
 
+### Model Predictive Control
+![Model Predictive Control Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/mpc.gif)
+
 
 ## Localization
 ### Extended Kalman Filter
