@@ -1,6 +1,6 @@
 
 
-#include "state_lattice.hpp"
+#include "path_planning/state_lattice.hpp"
 
 #include <numeric>
 

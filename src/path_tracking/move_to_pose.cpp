@@ -1,12 +1,12 @@
 
 
-#include "move_to_pose.hpp"
+#include "path_tracking/move_to_pose.hpp"
 
 MoveToPoseController::MoveToPoseController(float Kp_rho, float Kp_alpha, 
     float Kp_beta) :  Kp_rho_(Kp_alpha), 
     Kp_alpha_(Kp_alpha), Kp_beta_(Kp_beta) {}
 
-Control MoveToPoseController::moveToPose(const Pose& curr)  {
+Control MoveToPoseController::moveToPose(const Pose2D& curr)  {
     Control u {0.f, 0.f};
 
     float dx = goal_.x - curr.x;

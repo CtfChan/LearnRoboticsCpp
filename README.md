@@ -152,10 +152,11 @@ We can see error ellipse in this demo is a much better approximation of the true
 - [x] state lattice (do after above)
 - [x] particle filtering
 - [x] cleanup filters and consolidate common funct one header
-- [ ] mpc
-- [ ] use Pose2D instead of pose in a lot of places
+- [x] mpc
+- [x] use Pose2D instead of pose in a lot of places
 - [ ] consolidate path trackers
 - [ ] consolidate path planning algos
+- [ ] clean up mpc impl.
 - [ ] EKFSLAM
 - [ ] FAST SLAM
 - [ ] Graph slam

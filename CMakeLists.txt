@@ -20,8 +20,6 @@ include_directories(include)
 include_directories(/usr/local/include)
 link_directories(/usr/local/lib)
 
-# include_directories(/home/tai/Software/Ipopt-3.12.13/build/include)
-# link_directories(/home/tai/Software/Ipopt-3.12.13/build/lib)
 
 # Create library
 ## Declare a cpp library
@@ -32,11 +30,13 @@ add_library(${PROJECT_NAME}_core
     src/localization/ukf.cpp
     src/localization/particle_filter.cpp
     src/path_tracking/mpc.cpp
+    src/path_tracking/move_to_pose.cpp
+    src/path_tracking/stanley_control.cpp
+    src/path_planning/quintic_polynomial.cpp
+    src/path_planning/trajectory_optimizer.cpp
+    src/path_planning/state_lattice.cpp
     src/cubic_spline.cpp
-    src/stanley_control.cpp
-    src/move_to_pose.cpp
-    src/trajectory_optimizer.cpp
-    src/state_lattice.cpp
+
 )
 
 
@@ -68,19 +68,19 @@ target_link_libraries(dwa ${Boost_LIBRARIES})
 add_executable(potential_field src/potential_field.cpp)
 target_link_libraries(potential_field ${Boost_LIBRARIES})
 
-add_executable(quintic_polynomial src/quintic_polynomial.cpp)
+add_executable(quintic_polynomial examples/path_planning/example_quintic_polynomial.cpp)
 target_link_libraries(quintic_polynomial ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
 add_executable(cubic_spline examples/example_cubic_spline.cpp)
 target_link_libraries(cubic_spline ${Boost_LIBRARIES}  ${PROJECT_NAME}_core)
 
-add_executable(trajectory_optimizer examples/example_trajectory_optimizer.cpp)
+add_executable(trajectory_optimizer examples/path_planning/example_trajectory_optimizer.cpp)
 target_link_libraries(trajectory_optimizer ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
-add_executable(lookup_table_generation examples/example_lookup_table_generation.cpp)
+add_executable(lookup_table_generation examples/path_planning/example_lookup_table_generation.cpp)
 target_link_libraries(lookup_table_generation ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
-add_executable(state_lattice examples/example_state_lattice.cpp)
+add_executable(state_lattice examples/path_planning/example_state_lattice.cpp)
 target_link_libraries(state_lattice ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
 
@@ -88,10 +88,10 @@ target_link_libraries(state_lattice ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 #PathTracking
 ##############################
 
-add_executable(move_to_pose examples/example_move_to_pose.cpp)
+add_executable(move_to_pose examples/path_tracking/example_move_to_pose.cpp)
 target_link_libraries(move_to_pose ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
-add_executable(stanley_control examples/example_stanley_control.cpp )
+add_executable(stanley_control examples/path_tracking/example_stanley_control.cpp )
 target_link_libraries(stanley_control ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
 add_executable(mpc examples/path_tracking/example_mpc.cpp)

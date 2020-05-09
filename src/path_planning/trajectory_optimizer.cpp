@@ -1,4 +1,4 @@
-#include "trajectory_optimizer.hpp"
+#include "path_planning/trajectory_optimizer.hpp"
 
 #include <iostream>
 

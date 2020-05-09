@@ -1,4 +1,4 @@
-#include "move_to_pose.hpp"
+#include "path_tracking/move_to_pose.hpp"
 #include "common.hpp"
 
 int main(){
@@ -18,13 +18,13 @@ int main(){
     std::uniform_real_distribution<float> unif_dist(0.0f, 1.0f);
 
     // generate start and goal location
-    Pose start {
+    Pose2D start {
         20.0f * unif_dist(generator),
         20.0f * unif_dist(generator),
         2.0f * static_cast<float>(M_PI) * unif_dist(generator) - static_cast<float>(M_PI)
     };
 
-    Pose goal {
+    Pose2D goal {
         20.0f * unif_dist(generator),
         20.0f * unif_dist(generator),
         2.0f * static_cast<float>(M_PI) * unif_dist(generator) - static_cast<float>(M_PI)
@@ -39,7 +39,7 @@ int main(){
     gp << "set term gif animate\n";
     gp << "set output '../animations/move_to_pose.gif'\n";
 
-    Pose curr = start;
+    Pose2D curr = start;
     while (controller.hasArrived() == false) {
         Control u = controller.moveToPose(curr);
         curr.theta = curr.theta + u.w * dt;
