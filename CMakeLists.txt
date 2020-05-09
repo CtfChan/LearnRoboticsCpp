@@ -43,6 +43,7 @@ add_library(${PROJECT_NAME}_core
     src/path_planning/state_lattice.cpp
     src/path_planning/cubic_spline.cpp
     src/path_planning/dwa.cpp
+    src/path_planning/prm.cpp
 )
 
 
@@ -59,8 +60,8 @@ target_link_libraries(dijkstra ${OpenCV_LIBS} ${Boost_LIBRARIES})
 add_executable(astar src/astar.cpp)
 target_link_libraries(astar ${OpenCV_LIBS} ${Boost_LIBRARIES} )
 
-add_executable(prm src/prm.cpp) # use opencv for kdtree
-target_link_libraries(prm ${OpenCV_LIBS} ${Boost_LIBRARIES} )
+add_executable(prm examples/path_planning/example_prm.cpp) # use opencv for kdtree
+target_link_libraries(prm ${OpenCV_LIBS} ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
 add_executable(rrt src/rrt.cpp)
 target_link_libraries(rrt ${Boost_LIBRARIES} )

@@ -1,5 +1,13 @@
-#include "prm.hpp"
+#include "path_planning/prm.hpp"
 
+
+std::pair<std::vector<float>, std::vector<float>> ProbabilisticRoadmap::getExpandedNodes() {
+    return {expanded_x_, expanded_y_};
+}
+
+std::vector<boost::tuple<float, float, float, float>> ProbabilisticRoadmap::getRoadMap() {
+    return plot_map_;
+}
 
 ProbabilisticRoadmap::ProbabilisticRoadmap(std::vector<float>& ox, std::vector<float>& oy, 
         float robot_radius, 
@@ -11,7 +19,7 @@ ProbabilisticRoadmap::ProbabilisticRoadmap(std::vector<float>& ox, std::vector<f
 
 
 std::pair<std::vector<float>, std::vector<float>> 
-        ProbabilisticRoadmap::plan(float sx, float sy, float gx, float gy, Gnuplot& gp){
+        ProbabilisticRoadmap::plan(float sx, float sy, float gx, float gy){
     auto [sample_x, sample_y] = samplePoints(sx, sy, gx, gy);
 
     std::vector<std::vector<int>> road_map = generateRoadMap(sample_x, sample_y);
@@ -29,13 +37,13 @@ std::pair<std::vector<float>, std::vector<float>>
     }
 
     // plan path
-    auto [rx, ry] = dijkstraPlanning(sx, sy, gx, gy, road_map, sample_x, sample_y, gp);
+    auto [rx, ry] = dijkstraPlanning(sx, sy, gx, gy, road_map, sample_x, sample_y);
 
-    // final plot
-    gp << "plot '-' with vectors nohead title 'roadmap', '-' title 'obs', '-' with linespoints lw 5 title 'path'\n";
-	gp.send1d(plot_map_);
-    gp.send1d(boost::make_tuple(ox_, oy_));
-    gp.send1d(boost::make_tuple(rx, ry));
+    // // final plot
+    // gp << "plot '-' with vectors nohead title 'roadmap', '-' title 'obs', '-' with linespoints lw 5 title 'path'\n";
+	// gp.send1d(plot_map_);
+    // gp.send1d(boost::make_tuple(ox_, oy_));
+    // gp.send1d(boost::make_tuple(rx, ry));
 
 
     return {rx, ry};
@@ -160,7 +168,7 @@ bool ProbabilisticRoadmap::validEdge(float x1, float y1, float x2, float y2) {
   std::pair<std::vector<float>, std::vector<float>> 
         ProbabilisticRoadmap::dijkstraPlanning(float sx, float sy, float gx, float gy, 
             std::vector<std::vector<int>>& road_map, 
-            std::vector<float>& sample_x, std::vector<float>& sample_y, Gnuplot& gp) {
+            std::vector<float>& sample_x, std::vector<float>& sample_y) {
 
         Node start_node(sx, sy, 0, -1);
         Node goal_node(gx, gy, 0, -1);
@@ -193,10 +201,10 @@ bool ProbabilisticRoadmap::validEdge(float x1, float y1, float x2, float y2) {
             // plotting
             expanded_x_.push_back(current.x);
             expanded_y_.push_back(current.y);
-            gp << "plot '-' with vectors nohead title 'roadmap', '-' title 'obs', '-' title 'expanded'\n";
-            gp.send1d(plot_map_);
-            gp.send1d(boost::make_tuple(ox_, oy_));
-            gp.send1d(boost::make_tuple(expanded_x_, expanded_y_));
+            // gp << "plot '-' with vectors nohead title 'roadmap', '-' title 'obs', '-' title 'expanded'\n";
+            // gp.send1d(plot_map_);
+            // gp.send1d(boost::make_tuple(ox_, oy_));
+            // gp.send1d(boost::make_tuple(expanded_x_, expanded_y_));
 
             if (c_id == (road_map.size()-1)) {
                 std::cout << "Found goal!" << std::endl;
@@ -249,59 +257,3 @@ bool ProbabilisticRoadmap::validEdge(float x1, float y1, float x2, float y2) {
         return {rx, ry};
 }
 
-
-
-int main(int argc, char *argv[])
-{
-    std::vector<float> ox;
-    std::vector<float> oy;
-    for (int i = -10; i < 60; ++i) {
-        ox.push_back(i);
-        oy.push_back(-10);
-    }
-    for (int i = -10; i < 61; ++i) {
-        ox.push_back(60);
-        oy.push_back(i);
-    }
-    for (int i = -10; i < 61; ++i) {
-        ox.push_back(i);
-        oy.push_back(60);
-    }
-    for (int i = -10; i < 61; ++i) {
-        ox.push_back(-10);
-        oy.push_back(i);
-    }
-    for (int i = -10; i < 40; ++i) {
-        ox.push_back(20);
-        oy.push_back(i);
-    }
-    for (int i = 0; i < 40; ++i) {
-        ox.push_back(40);
-        oy.push_back(60 - i);
-    }
-
-    Gnuplot gp;
-
-    gp << "set size ratio 1.0\n";
-    gp << "set xrange [-20:70]\nset yrange [-20:80]\n";
-    gp << "set term gif animate\n";
-    gp << "set output '../animations/prm.gif'\n";
-
-    // all measurements in meters
-    float sx = -5.0f;
-    float sy = -5.0f;
-    float gx = 50.0f;
-    float gy = 50.0f;
-    float robot_radius = 5.0f; 
-
-    ProbabilisticRoadmap prm(ox, oy, robot_radius, 500, 10, 30.0f);
-    auto [rx, ry] = prm.plan(sx, sy, gx, gy, gp);
-
-    sleep(5);
-
-    gp << "set output\n";
-
-
-  
-    return 0;
-}

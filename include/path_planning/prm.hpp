@@ -3,11 +3,14 @@
 #include <iostream>
 #include <vector>
 #include <random>
+#include <tuple>
 
 #include <opencv2/opencv.hpp>
 #include <opencv2/flann.hpp>
 
-#include "gnuplot-iostream.h"
+#include <boost/tuple/tuple.hpp>
+
+
 
 
 class KDTree {
@@ -71,8 +74,11 @@ public:
         int sample_points=500, int n_knn=10, float max_edge_len=30.0f);
     
     std::pair<std::vector<float>, std::vector<float>> 
-        plan(float sx, float sy, float gx, float gy, Gnuplot& gp);
+        plan(float sx, float sy, float gx, float gy);
 
+    std::pair<std::vector<float>, std::vector<float>> getExpandedNodes();
+
+    std::vector<boost::tuple<float, float, float, float> > getRoadMap();
 
 private:
     std::pair<std::vector<float>, std::vector<float>> 
@@ -87,7 +93,7 @@ private:
     std::pair<std::vector<float>, std::vector<float>> 
         dijkstraPlanning(float sx, float sy, float gx, float gy, 
             std::vector<std::vector<int>>& road_map, 
-            std::vector<float>& sample_x, std::vector<float>& sample_y, Gnuplot& gp);
+            std::vector<float>& sample_x, std::vector<float>& sample_y);
 
     std::vector<float> ox_;
     std::vector<float> oy_;
