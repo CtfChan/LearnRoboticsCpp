@@ -8,11 +8,12 @@
 
 BicycleModelRobot::BicycleModelRobot(float _x, float _y, float _yaw, 
                 float _v, float _L, float _max_steer, 
-                float _min_speed, float _max_speed, float _max_accel ) :
+                float _min_speed, float _max_speed, float _max_accel,
+                bool _normalize_yaw ) :
                 x(_x), y(_y), yaw(_yaw), v(_v), L(_L), 
                 max_steer(_max_steer),
                 min_speed(_min_speed), max_speed(_max_speed), 
-                max_accel(_max_accel) {}
+                max_accel(_max_accel), normalize_yaw(_normalize_yaw) {}
 
 
 void BicycleModelRobot::update(float acc, float delta, float dt) {
@@ -21,7 +22,8 @@ void BicycleModelRobot::update(float acc, float delta, float dt) {
     x += v * std::cos(yaw) * dt;
     y += v * std::sin(yaw) * dt;
     yaw += v / L * std::tan(delta) * dt;
-    yaw = normalizeAngle(yaw);
+    if (normalize_yaw)
+        yaw = normalizeAngle(yaw);
     v += acc * dt;
 
     v = std::clamp(v, min_speed, max_speed);

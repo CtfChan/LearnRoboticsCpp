@@ -34,12 +34,14 @@ struct BicycleModelRobot {
     float min_speed;
     float max_speed;
     float max_accel;
+    bool normalize_yaw;
 
     BicycleModelRobot(float _x, float _y, float _yaw, 
                     float _v, float _L, float _max_steer, 
                     float _min_speed=std::numeric_limits<float>::min(), 
                     float _max_speed=std::numeric_limits<float>::max(),
-                    float _max_accel=std::numeric_limits<float>::max());
+                    float _max_accel=std::numeric_limits<float>::max(), 
+                    bool normalize_yaw = true);
 
     // update state acceleration, steering, dt
     void update(float acc, float delta, float dt);

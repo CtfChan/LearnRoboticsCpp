@@ -1,5 +1,12 @@
 
 
+#include "cubic_spline.hpp"
+#include "common.hpp"
+#include "path_tracking/mpc.hpp"
+#include "gnuplot-iostream.h"
+
+
+
 #include <iostream>
 #include <iomanip>
 #include <limits>
@@ -11,19 +18,11 @@
 
 #include <algorithm>
 
-#include "cubic_spline.hpp"
-#include "common.hpp"
-#include "gnuplot-iostream.h"
-
 #define NX 4
 #define T 6
 
 #define DT 0.2
 #define MAX_STEER 45.0 / 180 * M_PI
-#define MAX_DSTEER 30.0 / 180 * M_PI
-
-#define MAX_ITER 3
-#define DU_TH 0.1
 
 #define N_IND_SEARCH 10
 #define MAX_TIME 500
@@ -33,13 +32,6 @@
 #define MIN_SPEED -20.0 / 3.6
 #define MAX_ACCEL 1.0
 
-#define LENGTH 4.5
-#define WIDTH 2.0
-#define BACKTOWHEEL 1.0
-#define WHEEL_LEN 0.3
-#define WHEEL_WIDTH 0.2
-#define TREAD 0.7
-#define WB 2.5
 
 using CppAD::AD;
 using M_XREF = Eigen::Matrix<float, NX, T>;
@@ -52,49 +44,30 @@ int v_start = yaw_start + T;
 int delta_start = v_start + T;
 int a_start = delta_start + T - 1;
 
-void update(BicycleModelRobot &state, float a, float delta)
+
+
+std::vector<float> calculateSpeedProfile(std::vector<float> rx, std::vector<float> ry, std::vector<float> ryaw, float target_speed)
 {
-    delta = std::clamp(delta, static_cast<float>(-MAX_STEER), static_cast<float>(MAX_STEER));
-
-    state.x = state.x + state.v * std::cos(state.yaw) * DT;
-    state.y = state.y + state.v * std::sin(state.yaw) * DT;
-    state.yaw = state.yaw + state.v / WB * CppAD::tan(delta) * DT;
-    state.v = state.v + a * DT;
-
-    state.v = std::clamp(state.v, static_cast<float>(MIN_SPEED), static_cast<float>(MAX_SPEED));
-};
-
-std::vector<float> calc_speed_profile(std::vector<float> rx, std::vector<float> ry, std::vector<float> ryaw, float target_speed)
-{
-    std::vector<float> speed_profile(ryaw.size(), target_speed);
-
-    float direction = 1.0;
-    for (unsigned int i = 0; i < ryaw.size() - 1; i++)
-    {
-        float dx = rx[i + 1] - rx[i];
-        float dy = ry[i + 1] - ry[i];
+    // recrod num points
+    size_t n = rx.size();
+    std::vector<float> speed_profile(n, target_speed);
+    bool pos_speed = true;
+    for (size_t i = 0; i < n-1; ++i) {
+        float dx = rx[i+1] - rx[i];
+        float dy = ry[i+1] - ry[i];
         float move_direction = std::atan2(dy, dx);
-
-        if (dx != 0.0 && dy != 0.0)
-        {
+        // assign negative target speed for large angle 
+        if (dx > std::numeric_limits<float>::epsilon() && dy > std::numeric_limits<float>::epsilon()) {
             float dangle = std::abs(normalizeAngle(move_direction - ryaw[i]));
-            if (dangle >= M_PI / 4.0)
-                direction = -1.0;
-            else
-                direction = 1.0;
+            pos_speed = (dangle >= M_PI / 4.0f) ? false : true;
         }
-
-        if (direction != 1.0)
-            speed_profile[i] = -1 * target_speed;
-        else
-            speed_profile[i] = target_speed;
+        speed_profile[i] = pos_speed ? target_speed : -target_speed;
     }
-    speed_profile[-1] = 0.0;
-
+    speed_profile.back() = 0.0; // stop
     return speed_profile;
 };
 
-int calc_nearest_index(BicycleModelRobot state, std::vector<float> cx, std::vector<float> cy, std::vector<float> cyaw, int pind)
+int calculateNearestIndex(BicycleModelRobot state, std::vector<float> cx, std::vector<float> cy, std::vector<float> cyaw, int pind)
 {
     float mind = std::numeric_limits<float>::max();
     float ind = 0;
@@ -114,7 +87,7 @@ int calc_nearest_index(BicycleModelRobot state, std::vector<float> cx, std::vect
     return ind;
 };
 
-void calc_ref_trajectory(BicycleModelRobot state, std::vector<float> cx, std::vector<float> cy,
+void calculateReferenceTrajectory(BicycleModelRobot state, std::vector<float> cx, std::vector<float> cy,
                          std::vector<float> cyaw, std::vector<float> ck, std::vector<float> sp, float dl, int &target_ind, M_XREF &xref)
 {
 
@@ -122,7 +95,7 @@ void calc_ref_trajectory(BicycleModelRobot state, std::vector<float> cx, std::ve
 
     int ncourse = cx.size();
 
-    int ind = calc_nearest_index(state, cx, cy, cyaw, target_ind);
+    int ind = calculateNearestIndex(state, cx, cy, cyaw, target_ind);
     if (target_ind >= ind)
         ind = target_ind;
 
@@ -148,7 +121,7 @@ void calc_ref_trajectory(BicycleModelRobot state, std::vector<float> cx, std::ve
     target_ind = ind;
 };
 
-void smooth_yaw(std::vector<float> &cyaw)
+void smoothYaw(std::vector<float> &cyaw)
 {
     for (unsigned int i = 0; i < cyaw.size() - 1; i++)
     {
@@ -168,7 +141,6 @@ void smooth_yaw(std::vector<float> &cyaw)
 class FG_EVAL
 {
 public:
-    // Eigen::VectorXd coeeffs;
     M_XREF traj_ref;
 
     FG_EVAL(M_XREF traj_ref)
@@ -233,7 +205,7 @@ public:
     }
 };
 
-std::vector<float> mpc_solve(BicycleModelRobot x0, M_XREF traj_ref)
+std::vector<float> mpcSolve(BicycleModelRobot x0, M_XREF traj_ref)
 {
 
     typedef CPPAD_TESTVECTOR(double) Dvector;
@@ -271,20 +243,20 @@ std::vector<float> mpc_solve(BicycleModelRobot x0, M_XREF traj_ref)
 
     for (auto i = delta_start; i < delta_start + T - 1; i++)
     {
-        vars_lowerbound[i] = -MAX_STEER;
-        vars_upperbound[i] = MAX_STEER;
+        vars_lowerbound[i] = -x0.max_steer;
+        vars_upperbound[i] = x0.max_steer;
     }
 
     for (auto i = a_start; i < a_start + T - 1; i++)
     {
-        vars_lowerbound[i] = -MAX_ACCEL;
-        vars_upperbound[i] = MAX_ACCEL;
+        vars_lowerbound[i] = -x0.max_accel;
+        vars_upperbound[i] = x0.max_accel;
     }
 
     for (auto i = v_start; i < v_start + T; i++)
     {
-        vars_lowerbound[i] = MIN_SPEED;
-        vars_upperbound[i] = MAX_SPEED;
+        vars_lowerbound[i] = x0.min_speed;
+        vars_upperbound[i] = x0.max_speed;
     }
 
     Dvector constraints_lowerbound(n_constraints);
@@ -323,8 +295,11 @@ std::vector<float> mpc_solve(BicycleModelRobot x0, M_XREF traj_ref)
         options, vars, vars_lowerbound, vars_upperbound, constraints_lowerbound,
         constraints_upperbound, fg_eval, solution);
 
-    bool ok = true;
-    ok &= solution.status == CppAD::ipopt::solve_result<Dvector>::success;
+    bool ok = (solution.status == CppAD::ipopt::solve_result<Dvector>::success);
+
+    std::cout << "Optimization success?: " << ok << std::endl;
+
+
 
     std::vector<float> result;
     for (auto i = 0; i < n_vars; i++)
@@ -334,45 +309,63 @@ std::vector<float> mpc_solve(BicycleModelRobot x0, M_XREF traj_ref)
     return result;
 };
 
-void mpc_simulation(std::vector<float> cx, std::vector<float> cy, std::vector<float> cyaw,
-                    std::vector<float> ck, std::vector<float> speed_profile, float goal_x, float goal_y)
+int main()
 {
-    BicycleModelRobot state(cx[0], cy[0], cyaw[0], speed_profile[0], WB, MAX_STEER);
-
-    float goal_dis = 0.5;
-    int iter_count = 0;
-
-    int target_ind = 0;
-    calc_nearest_index(state, cx, cy, cyaw, target_ind);
-
-    smooth_yaw(cyaw);
-
-    int count = 0;
-
-    std::vector<float> x_h;
+    // setup plotting
+    Gnuplot gp;
+    std::vector<float> x_h; // trajectory
     std::vector<float> y_h;
-    std::vector<float> x_ref;
+    std::vector<float> x_ref; // tracking/reference point
     std::vector<float> y_ref;
+
+    gp << "set size 1,1 \n";
+    gp << "set term gif animate\n";
+    gp << "set output '../animations/mpc.gif'\n";
+
+
+    // generate spline
+    std::vector<float> wx({0.0, 60.0, 125.0, 50.0, 75.0, 35.0, -10.0});
+    std::vector<float> wy({0.0, 0.0, 50.0, 65.0, 30.0, 50.0, -20.0});
+    float ds = 0.1;
+    auto [cx, cy, cyaw, ck, cs] = calculateSplineCourse(wx, wy, ds);
+
+    // setup velocity profile
+    float target_speed = 10.0 / 3.6;
+    std::vector<float> speed_profile = calculateSpeedProfile(cx, cy, cyaw, target_speed);
+
+    // define goal and goal thresh
+    float goal_x = cx.back(), goal_y = cy.back();
+    float goal_dis = 0.5;
+
+    // define state
+    BicycleModelRobot state(cx[0], cy[0], cyaw[0], speed_profile[0], 
+        WB, MAX_STEER, MIN_SPEED, MAX_SPEED, MAX_ACCEL, false);
+
+    // calculate idx to track
+    int target_ind = 0;
+    calculateNearestIndex(state, cx, cy, cyaw, target_ind);
+
+    // smooth out yaw
+    smoothYaw(cyaw);
+
 
     M_XREF xref;
 
-    Gnuplot gp;
 
-    double time = 0.0;
+    float time = 0.0;
     while (MAX_TIME >= time)
     {
-        calc_ref_trajectory(state, cx, cy, cyaw, ck, speed_profile, 1.0, target_ind, xref);
+        calculateReferenceTrajectory(state, cx, cy, cyaw, ck, speed_profile, 1.0, target_ind, xref);
 
-        std::vector<float> output = mpc_solve(state, xref);
-
-        // update(state, output[a_start], output[delta_start]);
-        update(state, output[a_start], output[delta_start]);
-
+        std::vector<float> output = mpcSolve(state, xref);
+        float acc = output[a_start];
         float steer = output[delta_start];
+        state.update(acc, steer, DT);
+
 
         float dx = state.x - goal_x;
         float dy = state.y - goal_y;
-        if (std::sqrt(dx * dx + dy * dy) <= goal_dis)
+        if (std::hypot(dx, dy) <= goal_dis)
         {
             std::cout << ("Goal") << std::endl;
             break;
@@ -398,21 +391,8 @@ void mpc_simulation(std::vector<float> cx, std::vector<float> cy, std::vector<fl
 
         time += DT;
     }
-};
 
-int main()
-{
+    gp << "set output\n";
 
-    std::vector<float> wx({0.0, 60.0, 125.0, 50.0, 75.0, 35.0, -10.0});
-    // std::vector<float> wy({0.0,  4.0,  -4.0,  4.0,  -4.0,   4.0,  0.0});
-    std::vector<float> wy({0.0, 0.0, 50.0, 65.0, 30.0, 50.0, -20.0});
-    float ds = 0.1;
-
-    auto [r_x, r_y, ryaw, rcurvature, rs] = calculateSplineCourse(wx, wy, ds);
-
-    float target_speed = 10.0 / 3.6;
-    std::vector<float> speed_profile = calc_speed_profile(r_x, r_y, ryaw, target_speed);
-
-    //   mpc_simulation(r_x, r_y, ryaw, rcurvature, speed_profile, {{wx.back(), wy.back()}});
-    mpc_simulation(r_x, r_y, ryaw, rcurvature, speed_profile, wx.back(), wy.back());
+    return 0;
 }
