@@ -24,15 +24,15 @@ struct Node {
 
 class GridSearchBase {
 public:
-    GridSearchBase (std::vector<int>& ox,  std::vector<int>& oy, 
-             float grid_res,  float robot_radius);
-
     virtual std::pair<std::vector<int>, std::vector<int>> 
         plan(float sx, float sy, float gx, float gy) = 0;
 
     std::pair<std::vector<int>, std::vector<int>> getExpandedNodes();
 
 protected:
+    GridSearchBase (std::vector<int>& ox,  std::vector<int>& oy, 
+             float grid_res,  float robot_radius);
+
     void calculateObstacleMap( std::vector<int>& ox,  std::vector<int>& oy);
 
     std::pair<std::vector<int>, std::vector<int>> 

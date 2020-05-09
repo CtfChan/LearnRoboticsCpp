@@ -45,10 +45,9 @@ add_library(${PROJECT_NAME}_core
     src/path_planning/dwa.cpp
     src/path_planning/prm.cpp
     src/path_planning/grid_search.cpp
+    src/path_planning/rrt.cpp
+    src/path_planning/rrt_star.cpp
 )
-
-
-
 
 
 ##############################
@@ -64,11 +63,11 @@ target_link_libraries(astar ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 add_executable(prm examples/path_planning/example_prm.cpp) # use opencv for kdtree
 target_link_libraries(prm ${OpenCV_LIBS} ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
-add_executable(rrt src/rrt.cpp)
-target_link_libraries(rrt ${Boost_LIBRARIES} )
+add_executable(rrt examples/path_planning/example_rrt.cpp)
+target_link_libraries(rrt ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
-add_executable(rrt_star src/rrt_star.cpp)
-target_link_libraries(rrt_star ${Boost_LIBRARIES} )
+add_executable(rrt_star examples/path_planning/example_rrt_star.cpp)
+target_link_libraries(rrt_star ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
 add_executable(potential_field examples/path_planning/example_potential_field.cpp)
 target_link_libraries(potential_field ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
