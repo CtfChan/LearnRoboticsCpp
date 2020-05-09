@@ -65,7 +65,8 @@ add_library(${PROJECT_NAME}_core
 add_executable(dijkstra examples/path_planning/example_dijkstra.cpp)
 target_link_libraries(dijkstra ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
-
+add_executable(astar examples/path_planning/example_astar.cpp)
+target_link_libraries(astar ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
 add_executable(prm examples/path_planning/example_prm.cpp) # use opencv for kdtree
 target_link_libraries(prm ${OpenCV_LIBS} ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
