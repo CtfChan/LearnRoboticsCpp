@@ -1,8 +1,6 @@
 # pragma once
 
-#include "gnuplot-iostream.h"
-
-using Path = std::vector<std::pair<float, float>> ;
+#include "common.hpp"
 
 
 class PotentialField {
@@ -11,7 +9,7 @@ public:
                 float reso, float robot_radius, 
                 float kp=5.0f, float eta=100.0f, float area_width=30.0f);
 
-    Path plan(float sx, float sy, float gx, float gy, Gnuplot& gp);
+    Path plan(float sx, float sy, float gx, float gy);
 
 private:
     void generatePotentialMap(float gx, float gy);

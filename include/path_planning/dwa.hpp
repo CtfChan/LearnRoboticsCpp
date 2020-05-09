@@ -6,7 +6,6 @@
 #include <Eigen/Core>
 
 
-
 enum class RobotType {
     circle,
     rectangle
@@ -64,19 +63,9 @@ using Obstacles = std::vector<std::pair<float, float>>;
 
 // covenient functions for plotting
 
+std::vector<std::pair<float, float>> pointToVector(float x, float y);
 
-std::vector<std::pair<float, float>> pointToVector(float x, float y) {
-    return { {x, y}};
-}
-
-
-std::vector<std::pair<float, float>> trajectorToVector(const Trajectory& traj) {
-    std::vector<std::pair<float, float>> vec;
-    vec.reserve(traj.size());
-    for (const auto& pose : traj) 
-        vec.emplace_back(pose.x, pose.y);
-    return vec;
-}
+std::vector<std::pair<float, float>> trajectorToVector(const Trajectory& traj);
 
 
 // DWA  functions

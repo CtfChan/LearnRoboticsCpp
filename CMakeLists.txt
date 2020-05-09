@@ -37,10 +37,12 @@ add_library(${PROJECT_NAME}_core
     src/path_tracking/stanley_control.cpp
 
     # path planning
+    src/path_planning/potential_field.cpp
     src/path_planning/quintic_polynomial.cpp
     src/path_planning/trajectory_optimizer.cpp
     src/path_planning/state_lattice.cpp
     src/path_planning/cubic_spline.cpp
+    src/path_planning/dwa.cpp
 )
 
 
@@ -66,11 +68,11 @@ target_link_libraries(rrt ${Boost_LIBRARIES} )
 add_executable(rrt_star src/rrt_star.cpp)
 target_link_libraries(rrt_star ${Boost_LIBRARIES} )
 
-add_executable(dwa src/dwa.cpp)
-target_link_libraries(dwa ${Boost_LIBRARIES})
+add_executable(potential_field examples/path_planning/example_potential_field.cpp)
+target_link_libraries(potential_field ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
-add_executable(potential_field src/potential_field.cpp)
-target_link_libraries(potential_field ${Boost_LIBRARIES})
+add_executable(dwa examples/path_planning/example_dwa.cpp)
+target_link_libraries(dwa ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
 add_executable(quintic_polynomial examples/path_planning/example_quintic_polynomial.cpp)
 target_link_libraries(quintic_polynomial ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
