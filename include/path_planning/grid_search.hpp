@@ -20,6 +20,8 @@ struct Node {
     Node () {}
 };
 
+
+
 class GridSearchBase {
 public:
     GridSearchBase (std::vector<int>& ox,  std::vector<int>& oy, 

@@ -55,13 +55,6 @@ add_library(${PROJECT_NAME}_core
 #PathPlanning
 ##############################
 
-# add_executable(dijkstra src/dijkstra.cpp)
-# target_link_libraries(dijkstra ${OpenCV_LIBS} ${Boost_LIBRARIES})
-
-# add_executable(astar src/astar.cpp)
-# target_link_libraries(astar ${OpenCV_LIBS} ${Boost_LIBRARIES} )
-
-
 add_executable(dijkstra examples/path_planning/example_dijkstra.cpp)
 target_link_libraries(dijkstra ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
