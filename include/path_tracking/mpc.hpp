@@ -11,44 +11,41 @@
 using CppAD::AD;
 
 
+std::vector<float> calculateSpeedProfile(std::vector<float> rx, std::vector<float> ry, 
+                                        std::vector<float> ryaw, float target_speed);
+
+
 class ModelPredictiveController {
 public:
-    ModelPredictiveController(int T, int n_ind_search, float dt) : 
-            T_(T), dt_(dt) {
-        x_start_ = 0;
-        y_start_ = x_start_ + T;
-        yaw_start_ = y_start_ + T;
-        v_start_ = yaw_start_ + T;
-        delta_start_ = v_start_ + T;
-        a_start_ = delta_start_ + T - 1;
-        n_vars_ =  T * 4 + (T - 1) * 2;
-        n_constraints_ = T * 4;
-    }
-
-    void setPath(std::vector<float>& cx, std::vector<float>& cy, std::vector<float>& cyaw);
+    ModelPredictiveController(int T, int n_ind_search, float dt, float goal_dist);
+    
+    void setPath(std::vector<float>& cx, std::vector<float>& cy, std::vector<float>& cyaw,
+                std::vector<float>& ck, std::vector<float>& speed_profile);
 
     std::pair<float, float> control(BicycleModelRobot& state);
 
-    bool atGoal();
+    std::pair<float, float>  getReferencePosition();
+
+    bool atGoal(BicycleModelRobot& state) ;
 
 private:
 
-    void smoothYaw(std::vector<float> &cyaw);
-
-    std::vector<float> calculateSpeedProfile(std::vector<float> rx, std::vector<float> ry, 
-                                            std::vector<float> ryaw, float target_speed);
-
+    void smoothYaw(std::vector<float> &cyaw) ;
 
     int calculateNearestIndex(BicycleModelRobot& state, int pind);
 
+    void calculateReferenceTrajectory(BicycleModelRobot& state);
 
-    std::pair<Eigen::MatrixXf, int> calculateReferenceTrajectory();
+    std::vector<float> mpcSolve(BicycleModelRobot& state);
 
+    std::vector<float> cx_, cy_, cyaw_, ck_;
 
     float dt_;
 
+    float dl_ = 1.f;
     Eigen::MatrixXf xref_;
     int target_ind_;
+    int n_ind_search_;
 
     int nx_ = 4; // fixed number of states
     int T_; // time horizon can be varies
@@ -62,14 +59,30 @@ private:
 
     size_t n_vars_, n_constraints_;
 
-    bool at_goal_ = true;
+    float goal_dist_;
 
-    // define nested class for optimization
-    class FUNC_EVAL {
-        public:
-            typedef CPPAD_TESTVECTOR(AD<double>) ADvector;
-            void operator()(ADvector &fg, const ADvector &vars);
-    };
+    std::vector<float> speed_profile_;
+
 };
 
 
+struct FUNC_EVAL {
+public:
+//     FUNC_EVAL();
+
+// float T_;
+//     float dt_;
+//     float L_;
+//     float x_start_, y_start_, yaw_start_, v_start_, delta_start_, a_start_;
+//     Eigen::MatrixXf xref_;
+
+
+    int T_;
+    double dt_;
+    double L_;
+    int x_start_, y_start_, yaw_start_, v_start_, delta_start_, a_start_;
+    Eigen::MatrixXf xref_;
+
+    typedef CPPAD_TESTVECTOR(AD<double>) ADvector;
+    void operator()(ADvector &fg, const ADvector &vars);
+};

@@ -40,9 +40,8 @@ This repository contains my implementations of classical robotics algorithms in 
 - Eigen 3
 - Boost 1.4
 - gnuplot
-- ipoptd (this one is a pickle, TODO add instr.)
-sudo apt-get install cppad
-
+- ipoptd (this one is a pickle, [install tips](https://github.com/udacity/CarND-MPC-Quizzes/blob/master/install_Ipopt_CppAD.md))
+- cppad (sudo apt-get install cppad)
 
 
 ## Build
@@ -52,9 +51,6 @@ $ cd build
 $ cmake ../
 $ make -j4
 ```
-
-
-
 
 
 ## Path Planning
@@ -154,14 +150,15 @@ We can see error ellipse in this demo is a much better approximation of the true
 - [x] cleanup filters and consolidate common funct one header
 - [x] mpc
 - [x] use Pose2D instead of pose in a lot of places
-- [ ] consolidate path trackers
-- [ ] consolidate path planning algos
+- [x] move path trackers into the right folder
+- [ ] move path planners into the right folder
 - [ ] clean up mpc impl.
 - [ ] EKFSLAM
 - [ ] FAST SLAM
 - [ ] Graph slam
 - [ ] informed rrtstar
 - [ ] batch informed rrtstar
+- [ ] consolidate rrts
 - [ ] reed shepps path
 - [ ] hybrid A*
 - [ ] lidar to grip map
