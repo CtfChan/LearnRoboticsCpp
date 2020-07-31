@@ -36,7 +36,7 @@ int main() {
     gp << "set xrange [-20:70]\nset yrange [-20:80]\n";
 
     gp << "set term gif animate\n";
-    gp << "set output '../animations/dijkstra.gif'\n";
+    gp << "set output '../animations/astar.gif'\n";
 
     // all measurements in meters
     float sx = -5.0f;

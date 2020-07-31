@@ -5,6 +5,7 @@ This repository contains my implementations of classical robotics algorithms in 
 
 ## Table of Contents
 * [Requirements](#requirements)
+* [Dependencies Installation](#dependency-installation)
 * [Build](#build)
 * [Localization](#localization)
     * [Extended Kalman Filter](#extended-kalman-filter)
@@ -27,14 +28,15 @@ This repository contains my implementations of classical robotics algorithms in 
     * [Stanely Control](#stanley-control)
     * [Model Predictive Control](#model-predictive-control)
 
-## Requirments (Tested on Ubuntu 18.04)
+## Requirments 
+Tested on Ubuntu 18.04
 - cmake
 - opencv 3.3 (for KD tree in PRM)
 - Eigen 3 
 - Boost 1.4 (for gnuplot-iostream)
 - gnuplot
-- ipoptd (this one is a pickle, [install tips borrowed from Udacity](https://github.com/udacity/CarND-MPC-Quizzes/blob/master/install_Ipopt_CppAD.md)
-- cppad (sudo apt-get install cppad)
+- ipoptd (this one is a pickle, [install tips borrowed from Udacity](https://github.com/udacity/CarND-MPC-Quizzes/blob/master/install_Ipopt_CppAD.md) )
+- cppad 
 
 ## Dependencies Installation
 1. apt installs
@@ -46,7 +48,7 @@ sudo apt install gnuplot
 sudo apt install libboost-all-dev
 sudo apt install libopencv-dev python3-opencv
 sudo apt install libeigen3-dev
-sudo apt-get install cppad
+sudo apt install cppad
 ```
 
 2. ipoptd install 
@@ -59,15 +61,16 @@ You probably want to `cd` into another directory like `Downloads` for this folde
 ```
 wget https://www.coin-or.org/download/source/Ipopt/Ipopt-3.12.7.zip && unzip Ipopt-3.12.7.zip && rm Ipopt-3.12.7.zip
 ```
-Call `install_ipopt.sh` in this repo with the source directory as the first argument (e.g. `bash install_ipopt.sh ~/Ipopt-3.12.7`)
+Call `install_ipopt.sh` in this repo with sudo and the source directory as the first argument (e.g. `sudo bash install_ipopt.sh ~/Ipopt-3.12.7`)
 
-3. xming (for WSL users only)
+3. `Xming` (for Windows Subsystem Linux users only)
 Need to install xming for gnuplot visualization: https://sourceforge.net/projects/xming/.
+Set display to `gnuplot` with: `$ export DISPLAY=:0 gnuplot`.
 
 
 ## Build
 ```console
-$ git clone 
+$ git clone https://github.com/CtfChan/LearnRoboticsCpp.git
 $ mkdir build
 $ cd build
 $ cmake ../
