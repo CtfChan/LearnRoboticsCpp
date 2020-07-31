@@ -3,4 +3,3 @@ bin
 .vscode
 animations/*.gif
 lib
-Ipopt*/*
