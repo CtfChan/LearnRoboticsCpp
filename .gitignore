@@ -1,6 +1,6 @@
 build
 bin
 .vscode
-animations/*.
+animations/*.gif
 lib
 Ipopt*/*
