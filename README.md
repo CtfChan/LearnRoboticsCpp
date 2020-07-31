@@ -10,11 +10,6 @@ This repository contains my implementations of classical robotics algorithms in 
     * [Extended Kalman Filter](#extended-kalman-filter)
     * [Unscented Kalman Filter](#unscented-kalman-filter)
     * [Particle Filter](#particle-filter)
-* [SLAM](#slam)
-    * ICP 
-    * EKF-SLAM 
-    * FastSLAM
-    * GraphSLAM
 * [Path Planning](#path-planning)
     * [Dijkstra](#dijkstra)
     * [AStar](#astar)
@@ -27,25 +22,52 @@ This repository contains my implementations of classical robotics algorithms in 
     * [DWA](#dwa)
     * [Model Predictive Trajectory Generator](#model-predictive-trajectory-generator)
     * [State Lattice Planner](#state-lattice-planner)                 
-    * DStar
 * [Path Tracking](#path-tracking)
     * [Move to Pose](#move-to-pose)
     * [Stanely Control](#stanley-control)
     * [Model Predictive Control](#model-predictive-control)
-* [To do](#to-do)
 
-## Requirments
+## Requirments (Tested on Ubuntu 18.04)
 - cmake
-- opencv 3.3 
-- Eigen 3
-- Boost 1.4
+- opencv 3.3 (for KD tree in PRM)
+- Eigen 3 
+- Boost 1.4 (for gnuplot-iostream)
 - gnuplot
-- ipoptd (this one is a pickle, [install tips](https://github.com/udacity/CarND-MPC-Quizzes/blob/master/install_Ipopt_CppAD.md))
+- ipoptd (this one is a pickle, [install tips borrowed from Udacity](https://github.com/udacity/CarND-MPC-Quizzes/blob/master/install_Ipopt_CppAD.md)
 - cppad (sudo apt-get install cppad)
+
+## Dependencies Installation
+1. apt installs
+```
+sudo apt update
+sudo apt install build-essential
+sudo apt install cmake
+sudo apt install gnuplot
+sudo apt install libboost-all-dev
+sudo apt install libopencv-dev python3-opencv
+sudo apt install libeigen3-dev
+sudo apt-get install cppad
+```
+
+2. ipoptd install 
+```
+sudo apt install gfortran
+sudo apt install unzip
+```
+
+You probably want to `cd` into another directory like `Downloads` for this folder
+```
+wget https://www.coin-or.org/download/source/Ipopt/Ipopt-3.12.7.zip && unzip Ipopt-3.12.7.zip && rm Ipopt-3.12.7.zip
+```
+Call `install_ipopt.sh` in this repo with the source directory as the first argument (e.g. `bash install_ipopt.sh ~/Ipopt-3.12.7`)
+
+3. xming (for WSL users only)
+Need to install xming for gnuplot visualization: https://sourceforge.net/projects/xming/.
 
 
 ## Build
 ```console
+$ git clone 
 $ mkdir build
 $ cd build
 $ cmake ../
@@ -119,58 +141,4 @@ We can see error ellipse in this demo is a much better approximation of the true
 
 
 
-## SLAM
-### EKF-SLAM
 
-### FastSLAM
-
-### Graph Slam
-
-
-
-## To Do
-- [X] gnuplot scatter
-- [X] gnuplot animation
-- [x] dijkstra 
-- [x] astar
-- [x] prm
-- [x] rrt
-- [x] rrtstar
-- [x] dwa
-- [x] potential field
-- [x] ekf
-- [x] ukf
-- [x] move to pose
-- [x] cubic spline
-- [x] quintic spline
-- [x] stanley controller
-- [x] model predictive trajectory generator
-- [x] state lattice (do after above)
-- [x] particle filtering
-- [x] cleanup filters and consolidate common funct one header
-- [x] mpc
-- [x] use Pose2D instead of pose in a lot of places
-- [x] move path trackers into the right folder
-- [ ] move path planners into the right folder
-- [ ] clean up mpc impl.
-- [ ] EKFSLAM
-- [ ] FAST SLAM
-- [ ] Graph slam
-- [ ] informed rrtstar
-- [ ] batch informed rrtstar
-- [ ] consolidate rrts
-- [ ] reed shepps path
-- [ ] hybrid A*
-- [ ] lidar to grip map
-- [ ] frontier exploration 
-- [ ] icp
-- [ ] D*
-- [ ] frenet frame
-- [ ] voronoi -> need to find C++ impl. of voronoi sampling
-- [ ] Improve astar and dij to use node rather than vector to save cost_to_come, also use open and close sets hash instead
-- [ ] Plot start and goal point in prm, astar, dikj
-- [ ] visualization of ekf, error ellipse
-- [ ] gtest integration
-- [ ] categorize into planning, localization, perception. hybrid approaches
-- [ ] turn algos into ALG.hpp, ALG.cpp, example_ALG.cpp 
-- [ ] decouple algo from gnuplot

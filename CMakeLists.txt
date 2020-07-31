@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.1)
-project(CPP_ROBOTICS)
+project(LEARN_ROBOTICS_CPP)
 
 set(CMAKE_CXX_STANDARD 17)
 # set(CMAKE_BUILD_TYPE Debug)
@@ -48,6 +48,22 @@ add_library(${PROJECT_NAME}_core
     src/path_planning/rrt.cpp
     src/path_planning/rrt_star.cpp
 )
+
+
+
+##############################
+#Localization
+##############################
+
+add_executable(ekf examples/localization/example_ekf.cpp)
+target_link_libraries(ekf ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+
+add_executable(ukf examples/localization/example_ukf.cpp)
+target_link_libraries(ukf ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+
+add_executable(particle_filter examples/localization/example_particle_filter.cpp)
+target_link_libraries(particle_filter ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+
 
 
 ##############################
@@ -103,18 +119,4 @@ target_link_libraries(stanley_control ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
 add_executable(mpc examples/path_tracking/example_mpc.cpp)
 target_link_libraries(mpc ${Boost_LIBRARIES} ${PROJECT_NAME}_core ipopt)
-
-
-##############################
-#Localization
-##############################
-
-add_executable(ekf examples/localization/example_ekf.cpp)
-target_link_libraries(ekf ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
-
-add_executable(ukf examples/localization/example_ukf.cpp)
-target_link_libraries(ukf ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
-
-add_executable(particle_filter examples/localization/example_particle_filter.cpp)
-target_link_libraries(particle_filter ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
