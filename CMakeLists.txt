@@ -65,7 +65,6 @@ add_executable(particle_filter examples/localization/example_particle_filter.cpp
 target_link_libraries(particle_filter ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
 
-
 ##############################
 #PathPlanning
 ##############################
