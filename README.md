@@ -28,15 +28,23 @@ This repository contains my implementations of classical robotics algorithms in 
     * [Stanely Control](#stanley-control)
     * [Model Predictive Control](#model-predictive-control)
 
-## Requirments 
+
+```console
+$ sudo DOCKER_BUILDKIT=1 docker build -f Dockerfile -t conan_robotics . --rm
+```
+
+
+<!-- ## Requirments 
 Tested on Ubuntu 18.04
 - cmake
 - opencv 3.3 (for KD tree in PRM)
 - Eigen 3 
 - Boost 1.4 (for gnuplot-iostream)
 - gnuplot
+ -->
 
-## Dependencies Installation
+
+<!-- ## Dependencies Installation
 1. apt installs
 ```
 sudo apt update
@@ -60,7 +68,7 @@ $ mkdir build
 $ cd build
 $ cmake ../
 $ make -j4
-```
+``` -->
 
 
 ## Path Planning

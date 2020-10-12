@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.10)
 project(LEARN_ROBOTICS_CPP)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -6,116 +6,142 @@ set(CMAKE_CXX_STANDARD 17)
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
+
+
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup()
+
+
+include_directories(include)
+
+
+add_subdirectory (src)
+add_subdirectory (tests)
+add_subdirectory (examples)
+
+
+
+
+
 #############################
 #Dependencies
 #############################
 
-find_package(Eigen3 REQUIRED)
-find_package(OpenCV REQUIRED)
-find_package(Boost 1.40.0 COMPONENTS filesystem system iostreams REQUIRED)
+# find_package(Eigen3 REQUIRED)
+# find_package(OpenCV REQUIRED)
+# find_package(Boost 1.40.0 COMPONENTS filesystem system iostreams REQUIRED)
 
-include_directories(${EIGEN3_INCLUDE_DIR})
-include_directories(include)
+# include_directories(${EIGEN3_INCLUDE_DIR})
+# include_directories(include)
 
-include_directories(/usr/local/include)
-link_directories(/usr/local/lib)
+# include_directories(/usr/local/include)
+# link_directories(/usr/local/lib)
 
 
-# Create library
-## Declare a cpp library
-add_library(${PROJECT_NAME}_core
-    src/common.cpp
-    # localization
-    src/localization/filters.cpp
-    src/localization/ekf.cpp
-    src/localization/ukf.cpp
-    src/localization/particle_filter.cpp
+
+
+# enable_testing()
+
+
+
+# add_subdirectory (libbar)
+# add_subdirectory (tests)
+
+# # Create library
+# ## Declare a cpp library
+# add_library(${PROJECT_NAME}_core
+#     src/common.cpp
+#     # localization
+#     src/localization/filters.cpp
+#     src/localization/ekf.cpp
+#     src/localization/ukf.cpp
+#     src/localization/particle_filter.cpp
     
-    # path tracking
-    src/path_tracking/mpc.cpp
-    src/path_tracking/move_to_pose.cpp
-    src/path_tracking/stanley_control.cpp
+#     # path tracking
+#     src/path_tracking/mpc.cpp
+#     src/path_tracking/move_to_pose.cpp
+#     src/path_tracking/stanley_control.cpp
 
-    # path planning
-    src/path_planning/potential_field.cpp
-    src/path_planning/quintic_polynomial.cpp
-    src/path_planning/trajectory_optimizer.cpp
-    src/path_planning/state_lattice.cpp
-    src/path_planning/cubic_spline.cpp
-    src/path_planning/dwa.cpp
-    src/path_planning/prm.cpp
-    src/path_planning/grid_search.cpp
-    src/path_planning/rrt.cpp
-    src/path_planning/rrt_star.cpp
-)
-
-
-
-##############################
-#Localization
-##############################
-
-add_executable(ekf examples/localization/example_ekf.cpp)
-target_link_libraries(ekf ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
-
-add_executable(ukf examples/localization/example_ukf.cpp)
-target_link_libraries(ukf ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
-
-add_executable(particle_filter examples/localization/example_particle_filter.cpp)
-target_link_libraries(particle_filter ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+#     # path planning
+#     src/path_planning/potential_field.cpp
+#     src/path_planning/quintic_polynomial.cpp
+#     src/path_planning/trajectory_optimizer.cpp
+#     src/path_planning/state_lattice.cpp
+#     src/path_planning/cubic_spline.cpp
+#     src/path_planning/dwa.cpp
+#     src/path_planning/prm.cpp
+#     src/path_planning/grid_search.cpp
+#     src/path_planning/rrt.cpp
+#     src/path_planning/rrt_star.cpp
+# )
 
 
-##############################
-#PathPlanning
-##############################
 
-add_executable(dijkstra examples/path_planning/example_dijkstra.cpp)
-target_link_libraries(dijkstra ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+# ##############################
+# #Localization
+# ##############################
 
-add_executable(astar examples/path_planning/example_astar.cpp)
-target_link_libraries(astar ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+# add_executable(ekf examples/localization/example_ekf.cpp)
+# target_link_libraries(ekf ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
-add_executable(prm examples/path_planning/example_prm.cpp) # use opencv for kdtree
-target_link_libraries(prm ${OpenCV_LIBS} ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+# add_executable(ukf examples/localization/example_ukf.cpp)
+# target_link_libraries(ukf ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
-add_executable(rrt examples/path_planning/example_rrt.cpp)
-target_link_libraries(rrt ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
-
-add_executable(rrt_star examples/path_planning/example_rrt_star.cpp)
-target_link_libraries(rrt_star ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
-
-add_executable(potential_field examples/path_planning/example_potential_field.cpp)
-target_link_libraries(potential_field ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
-
-add_executable(dwa examples/path_planning/example_dwa.cpp)
-target_link_libraries(dwa ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
-
-add_executable(quintic_polynomial examples/path_planning/example_quintic_polynomial.cpp)
-target_link_libraries(quintic_polynomial ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
-
-add_executable(cubic_spline examples/path_planning/example_cubic_spline.cpp)
-target_link_libraries(cubic_spline ${Boost_LIBRARIES}  ${PROJECT_NAME}_core)
-
-add_executable(trajectory_optimizer examples/path_planning/example_trajectory_optimizer.cpp)
-target_link_libraries(trajectory_optimizer ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
-
-add_executable(lookup_table_generation examples/path_planning/example_lookup_table_generation.cpp)
-target_link_libraries(lookup_table_generation ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
-
-add_executable(state_lattice examples/path_planning/example_state_lattice.cpp)
-target_link_libraries(state_lattice ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+# add_executable(particle_filter examples/localization/example_particle_filter.cpp)
+# target_link_libraries(particle_filter ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
 
-##############################
-#PathTracking
-##############################
+# ##############################
+# #PathPlanning
+# ##############################
 
-add_executable(move_to_pose examples/path_tracking/example_move_to_pose.cpp)
-target_link_libraries(move_to_pose ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+# add_executable(dijkstra examples/path_planning/example_dijkstra.cpp)
+# target_link_libraries(dijkstra ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
-add_executable(stanley_control examples/path_tracking/example_stanley_control.cpp )
-target_link_libraries(stanley_control ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+# add_executable(astar examples/path_planning/example_astar.cpp)
+# target_link_libraries(astar ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
-add_executable(mpc examples/path_tracking/example_mpc.cpp)
-target_link_libraries(mpc ${Boost_LIBRARIES} ${PROJECT_NAME}_core ipopt)
+# add_executable(prm examples/path_planning/example_prm.cpp) # use opencv for kdtree
+# target_link_libraries(prm ${OpenCV_LIBS} ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+
+# add_executable(rrt examples/path_planning/example_rrt.cpp)
+# target_link_libraries(rrt ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+
+# add_executable(rrt_star examples/path_planning/example_rrt_star.cpp)
+# target_link_libraries(rrt_star ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+
+# add_executable(potential_field examples/path_planning/example_potential_field.cpp)
+# target_link_libraries(potential_field ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+
+# add_executable(dwa examples/path_planning/example_dwa.cpp)
+# target_link_libraries(dwa ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+
+# add_executable(quintic_polynomial examples/path_planning/example_quintic_polynomial.cpp)
+# target_link_libraries(quintic_polynomial ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+
+# add_executable(cubic_spline examples/path_planning/example_cubic_spline.cpp)
+# target_link_libraries(cubic_spline ${Boost_LIBRARIES}  ${PROJECT_NAME}_core)
+
+# add_executable(trajectory_optimizer examples/path_planning/example_trajectory_optimizer.cpp)
+# target_link_libraries(trajectory_optimizer ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+
+# add_executable(lookup_table_generation examples/path_planning/example_lookup_table_generation.cpp)
+# target_link_libraries(lookup_table_generation ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+
+# add_executable(state_lattice examples/path_planning/example_state_lattice.cpp)
+# target_link_libraries(state_lattice ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+
+
+# ##############################
+# #PathTracking
+# ##############################
+
+# add_executable(move_to_pose examples/path_tracking/example_move_to_pose.cpp)
+# target_link_libraries(move_to_pose ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+
+# add_executable(stanley_control examples/path_tracking/example_stanley_control.cpp )
+# target_link_libraries(stanley_control ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+
+# add_executable(mpc examples/path_tracking/example_mpc.cpp)
+# target_link_libraries(mpc ${Boost_LIBRARIES} ${PROJECT_NAME}_core ipopt)
 
