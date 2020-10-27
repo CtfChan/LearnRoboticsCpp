@@ -1,0 +1,8 @@
+[requires]
+gtest/1.10.0
+boost/1.74.0
+eigen/3.3.7
+#opencv/4.1.1@conan/stable
+
+[generators]
+cmake

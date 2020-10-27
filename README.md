@@ -22,21 +22,27 @@ This repository contains my implementations of classical robotics algorithms in 
     * [Cubic Spline](#cubic-spline)
     * [DWA](#dwa)
     * [Model Predictive Trajectory Generator](#model-predictive-trajectory-generator)
-    * [State Lattice Planner](#state-lattice-planner)                 
+    * [State Lattice Planner](#state-lattice-planner)
 * [Path Tracking](#path-tracking)
     * [Move to Pose](#move-to-pose)
     * [Stanely Control](#stanley-control)
     * [Model Predictive Control](#model-predictive-control)
 
-## Requirments 
+## Requirments
 Tested on Ubuntu 18.04
 - cmake
 - opencv 3.3 (for KD tree in PRM)
-- Eigen 3 
+- Eigen 3
 - Boost 1.4 (for gnuplot-iostream)
 - gnuplot
 - ipoptd (this one is a pickle, [install tips borrowed from Udacity](https://github.com/udacity/CarND-MPC-Quizzes/blob/master/install_Ipopt_CppAD.md) )
-- cppad 
+- cppad
+
+
+## Docker
+```
+$ sudo docker build -f Dockerfile -t learn_robotics_cpp .
+```
 
 ## Dependencies Installation
 1. apt installs
@@ -51,7 +57,7 @@ sudo apt install libeigen3-dev
 sudo apt install cppad
 ```
 
-2. ipoptd install 
+2. ipoptd install
 ```
 sudo apt install gfortran
 sudo apt install unzip
@@ -79,41 +85,41 @@ $ make -j4
 
 
 ## Path Planning
-### DWA 
+### DWA
 ![DWA Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/dwa.gif)
 
-### Dijkstra 
+### Dijkstra
 ![Dijkstra Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/dijkstra.gif)
 
-### A* 
+### A*
 ![A* Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/astar.gif)
 
-### PRM 
+### PRM
 ![PRM Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/prm.gif)
 
-### RRT 
+### RRT
 ![RRT Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/rrt.gif)
 
-### RRTStar 
+### RRTStar
 ![RRTStar Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/rrt_star.gif)
 
-### Potential Field 
+### Potential Field
 ![Potential Field Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/potential_field.gif)
 
 ### Quintic Polynomial
 ![Quintic Polynomial Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/quintic_polynomial.gif)
- 
+
 ### Cubic Spline
 ![Cubic Spline Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/cubic_spline.gif)
- 
+
 ### Model Predictive Trajectory Generation
 ![ Model Predictive Trajectory Generation](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/model_predictive_trajectory_generation.gif)
- 
+
 
 ### State Lattice Planner
 <p float="left">
   <img src="https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/uniform_sampling.png" width="300" />
-  <img src="https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/biased_sampling.png" width="300" /> 
+  <img src="https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/biased_sampling.png" width="300" />
   <img src="https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/lane_sampling.png" width="300" />
 </p>
 Left to right: uniform, biased, lane sampling
@@ -137,7 +143,7 @@ Left to right: uniform, biased, lane sampling
 ### Unscented Kalman Filter
 ![Unscented Kalman Filter Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/ukf.gif)
 
-We can see error ellipse in this demo is a much better approximation of the true distribution. EKF can be biased and inconsistent. 
+We can see error ellipse in this demo is a much better approximation of the true distribution. EKF can be biased and inconsistent.
 
 ### Particle Filter
 ![Particle Filter Demo](https://github.com/CtfChan/LearnRoboticsCppGifs/blob/master/animations/particle_filter.gif)
