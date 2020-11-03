@@ -44,13 +44,13 @@ int main() {
     float gx = 50.0f;
     float gy = 50.0f;
     float grid_res = 2.0;
-    float robot_radius = 1.0; 
+    float robot_radius = 1.0;
 
 
     Astar astar = Astar(ox, oy, grid_res, robot_radius);
     auto [rx, ry] = astar.plan(sx, sy, gx, gy);
 
-    
+
     // Do plotting
     auto [exp_x, exp_y] = astar.getExpandedNodes();
     for (size_t i = 0; i < exp_x.size(); ++i) {

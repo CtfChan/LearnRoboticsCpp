@@ -13,7 +13,7 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 find_package(Eigen3 REQUIRED)
 find_package(OpenCV REQUIRED)
 find_package(Boost 1.40.0 COMPONENTS filesystem system iostreams REQUIRED)
-find_package(Ceres REQUIRED)
+# find_package(Ceres REQUIRED)
 
 include_directories(${EIGEN3_INCLUDE_DIR})
 include_directories(include)
