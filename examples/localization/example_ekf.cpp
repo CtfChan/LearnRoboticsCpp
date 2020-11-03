@@ -7,14 +7,12 @@
 
 #include <random>
 
-
-int main(){
-
+int main() {
     // simulation parameters
-    float sim_time = 50.0f; // s
+    float sim_time = 50.0f;  // s
     float dt = 0.1;
 
-    // control input (v, w) will be constant 
+    // control input (v, w) will be constant
     Eigen::Vector2f u = Eigen::Vector2f(1.0f, 0.1f);
 
     // noisy control for dr
@@ -35,20 +33,20 @@ int main(){
 
     // motion model covariance
     Eigen::Matrix4f Q = Eigen::Matrix4f::Identity();
-    Q(0,0) = 0.1 * 0.1;
-    Q(1,1) = 0.1 * 0.1;
-    Q(2,2) =std::pow(deg2rad(1.0), 2)  ;
-    Q(3,3) = 0.1 * 0.1;
+    Q(0, 0) = 0.1 * 0.1;
+    Q(1, 1) = 0.1 * 0.1;
+    Q(2, 2) = std::pow(deg2rad(1.0), 2);
+    Q(3, 3) = 0.1 * 0.1;
 
     // observation model covariance
-    Eigen::Matrix2f  R = Eigen::Matrix2f::Identity();
-    R(0,0)=1.0;
-    R(1,1)=1.0;
+    Eigen::Matrix2f R = Eigen::Matrix2f::Identity();
+    R(0, 0) = 1.0;
+    R(1, 1) = 1.0;
 
     float control_noise_v = 1.0;
-    float control_noise_w = std::pow(deg2rad(30.0), 2); 
+    float control_noise_w = std::pow(deg2rad(30.0), 2);
 
-    float obs_noise_x =  0.5 * 0.5;
+    float obs_noise_x = 0.5 * 0.5;
     float obs_noise_y = 0.5 * 0.5;
 
     // random number generator
@@ -67,9 +65,8 @@ int main(){
     gp << "set term gif animate\n";
     gp << "set output '../animations/ekf.gif'\n";
 
-
     float time = 0.0f;
-    while(time <= sim_time){
+    while (time <= sim_time) {
         time += dt;
 
         // propagate true motion
@@ -88,7 +85,6 @@ int main(){
         z(1) = x_GT(1) + gaussian(generator) * obs_noise_y;
         obs_path.emplace_back(z(0), z(1));
 
-
         // do ekf
         extendedKalmanFilter(x_est, P_est, ud, z, Q, R, dt);
         est_path.emplace_back(x_est(0), x_est(1));
@@ -97,20 +93,17 @@ int main(){
         Ellipse error_ellipse = generateEllipse(x_est, P_est);
 
         gp << "plot '-' title 'ground truth' with lines,"
-                    "'-' title 'odometry' with lines,"
-                    "'-' title 'observation',"
-                    "'-' title 'covariance' with lines,"
-                    "'-' title 'filter' with lines\n";
+              "'-' title 'odometry' with lines,"
+              "'-' title 'observation',"
+              "'-' title 'covariance' with lines,"
+              "'-' title 'filter' with lines\n";
         gp.send1d(gt_path);
         gp.send1d(dr_path);
         gp.send1d(obs_path);
         gp.send1d(error_ellipse);
         gp.send1d(est_path);
-        // sleep(0.2);        
-
+        // sleep(0.2);
     }
 
     gp << "set output\n";
-
-
 }

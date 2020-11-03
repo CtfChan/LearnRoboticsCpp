@@ -38,7 +38,7 @@ COPY include /root/LearnRoboticsCpp/include
 COPY examples /root/LearnRoboticsCpp/examples
 
 WORKDIR /root/LearnRoboticsCpp
-RUN mkdir build && cd build && cmake .. && make -j 4
+# RUN mkdir build && cd build && cmake .. && make -j 4
 
 
 # ENTRYPOINT [ "bash", "-c" ]

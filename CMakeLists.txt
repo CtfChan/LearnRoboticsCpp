@@ -27,10 +27,10 @@ link_directories(/usr/local/lib)
 add_library(${PROJECT_NAME}_core
     src/common.cpp
     # localization
-    # src/localization/filters.cpp
-    # src/localization/ekf.cpp
-    # src/localization/ukf.cpp
-    # src/localization/particle_filter.cpp
+    src/localization/filters.cpp
+    src/localization/ekf.cpp
+    src/localization/ukf.cpp
+    src/localization/particle_filter.cpp
 
     # # path tracking
     # src/path_tracking/mpc.cpp
@@ -56,14 +56,14 @@ add_library(${PROJECT_NAME}_core
 # #Localization
 # ##############################
 
-# add_executable(ekf examples/localization/example_ekf.cpp)
-# target_link_libraries(ekf ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+add_executable(ekf examples/localization/example_ekf.cpp)
+target_link_libraries(ekf ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
-# add_executable(ukf examples/localization/example_ukf.cpp)
-# target_link_libraries(ukf ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+add_executable(ukf examples/localization/example_ukf.cpp)
+target_link_libraries(ukf ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
-# add_executable(particle_filter examples/localization/example_particle_filter.cpp)
-# target_link_libraries(particle_filter ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+add_executable(particle_filter examples/localization/example_particle_filter.cpp)
+target_link_libraries(particle_filter ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
 
 # ##############################
