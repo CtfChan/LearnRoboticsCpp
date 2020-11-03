@@ -2,7 +2,7 @@
 
 This repository contains my implementations of classical robotics algorithms in C++. Inspiration drawn from [PythonRobotics](https://github.com/AtsushiSakai/PythonRobotics) and [CppRobotics](https://github.com/onlytailei/CppRobotic). The CppRobotics repo was very good, but it used OpenCV to plot 2D graphs. I found the process of converting 2D points to pixel coordinates in OpenCV very tedious and it seems like a bit of a hack. This repo uses [gnuplot-iostream](https://github.com/dstahlke/gnuplot-iostream) instead for plotting which makes much prettier graphs than OpenCV and allows for us to easily make 3D plots.
 
-Some of these implementations will have an tutorial attached to it.
+Some of these implementations will have a tutorial attached to it. It's still a work in progress.
 
 ## Table of Contents
 * [Requirements](#requirements)
