@@ -41,3 +41,4 @@ WORKDIR /root/LearnRoboticsCpp
 RUN mkdir build && cd build && cmake .. && make -j 4
 
 
+# ENTRYPOINT [ "bash", "-c" ]

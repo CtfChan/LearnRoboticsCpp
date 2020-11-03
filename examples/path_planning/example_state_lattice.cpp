@@ -1,7 +1,7 @@
 #include "path_planning/state_lattice.hpp"
 #include "gnuplot-iostream.h"
 
-#include <sstream> 
+#include <sstream>
 
 std::vector<TableEntry> readLookupTable(std::string& file_path) {
     std::vector<TableEntry> table;
@@ -10,7 +10,7 @@ std::vector<TableEntry> readLookupTable(std::string& file_path) {
 
     // Make sure the file is open
     if(!my_file.is_open()) throw std::runtime_error("Could not open file");
-    
+
     std::string line;
     std::string tmp;
     float x, y, yaw, s, km, kf;
@@ -41,7 +41,7 @@ std::vector<TableEntry> readLookupTable(std::string& file_path) {
         TableEntry entry{x, y, yaw, s, km, kf};
         table.push_back(entry);
     }
-    
+
     my_file.close();
 
     return table;
@@ -209,7 +209,7 @@ void laneStateSamplingExample1() {
     float v_width = 1.f;
     float d = 10.f;
     size_t nxy = 5;
-    std::vector<Pose2D> target_states = calculateLaneStates(l_center, l_heading, 
+    std::vector<Pose2D> target_states = calculateLaneStates(l_center, l_heading,
                                                 l_width, v_width, d, nxy);
 
     // initialize optimizer

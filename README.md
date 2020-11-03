@@ -43,7 +43,7 @@ Tested on Ubuntu 18.04
 ## Running with Docker
 ```
 $ sudo docker build -f Dockerfile -t learn_robotics_cpp .
-$ sudo docker run -it learn_robotics_cpp
+$ sudo docker run --mount type=bind,source="$(pwd)",target=/root/LearnRoboticsCpp -it learn_robotics_cpp
 ```
 
 ## Dependencies Installation
