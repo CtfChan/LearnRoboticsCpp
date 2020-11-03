@@ -39,7 +39,7 @@ Tested on Ubuntu 18.04
 - cppad
 
 
-## Docker
+## Running with Docker
 ```
 $ sudo docker build -f Dockerfile -t learn_robotics_cpp .
 ```
