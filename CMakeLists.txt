@@ -32,22 +32,22 @@ add_library(${PROJECT_NAME}_core
     src/localization/ukf.cpp
     src/localization/particle_filter.cpp
 
-    # # path tracking
-    # src/path_tracking/mpc.cpp
-    # src/path_tracking/move_to_pose.cpp
-    # src/path_tracking/stanley_control.cpp
+    # path tracking
+    src/path_tracking/mpc.cpp
+    src/path_tracking/move_to_pose.cpp
+    src/path_tracking/stanley_control.cpp
 
-    # # path planning
-    # src/path_planning/potential_field.cpp
+    # path planning
+    src/path_planning/potential_field.cpp
     src/path_planning/quintic_polynomial.cpp
     src/path_planning/trajectory_optimizer.cpp
     src/path_planning/state_lattice.cpp
     src/path_planning/cubic_spline.cpp
-    # src/path_planning/dwa.cpp
-    # src/path_planning/prm.cpp
-    # src/path_planning/grid_search.cpp
-    # src/path_planning/rrt.cpp
-    # src/path_planning/rrt_star.cpp
+    src/path_planning/dwa.cpp
+    src/path_planning/prm.cpp
+    src/path_planning/grid_search.cpp
+    src/path_planning/rrt.cpp
+    src/path_planning/rrt_star.cpp
 )
 
 
@@ -70,26 +70,26 @@ target_link_libraries(particle_filter ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 # #PathPlanning
 # ##############################
 
-# add_executable(dijkstra examples/path_planning/example_dijkstra.cpp)
-# target_link_libraries(dijkstra ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+add_executable(dijkstra examples/path_planning/example_dijkstra.cpp)
+target_link_libraries(dijkstra ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
-# add_executable(astar examples/path_planning/example_astar.cpp)
-# target_link_libraries(astar ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+add_executable(astar examples/path_planning/example_astar.cpp)
+target_link_libraries(astar ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
-# add_executable(prm examples/path_planning/example_prm.cpp) # use opencv for kdtree
-# target_link_libraries(prm ${OpenCV_LIBS} ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+add_executable(prm examples/path_planning/example_prm.cpp) # use opencv for kdtree
+target_link_libraries(prm ${OpenCV_LIBS} ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
-# add_executable(rrt examples/path_planning/example_rrt.cpp)
-# target_link_libraries(rrt ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+add_executable(rrt examples/path_planning/example_rrt.cpp)
+target_link_libraries(rrt ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
-# add_executable(rrt_star examples/path_planning/example_rrt_star.cpp)
-# target_link_libraries(rrt_star ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+add_executable(rrt_star examples/path_planning/example_rrt_star.cpp)
+target_link_libraries(rrt_star ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
-# add_executable(potential_field examples/path_planning/example_potential_field.cpp)
-# target_link_libraries(potential_field ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+add_executable(potential_field examples/path_planning/example_potential_field.cpp)
+target_link_libraries(potential_field ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
-# add_executable(dwa examples/path_planning/example_dwa.cpp)
-# target_link_libraries(dwa ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+add_executable(dwa examples/path_planning/example_dwa.cpp)
+target_link_libraries(dwa ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
 add_executable(quintic_polynomial examples/path_planning/example_quintic_polynomial.cpp)
 target_link_libraries(quintic_polynomial ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
@@ -111,12 +111,12 @@ target_link_libraries(state_lattice ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 # #PathTracking
 # ##############################
 
-# add_executable(move_to_pose examples/path_tracking/example_move_to_pose.cpp)
-# target_link_libraries(move_to_pose ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+add_executable(move_to_pose examples/path_tracking/example_move_to_pose.cpp)
+target_link_libraries(move_to_pose ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
-# add_executable(stanley_control examples/path_tracking/example_stanley_control.cpp )
-# target_link_libraries(stanley_control ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+add_executable(stanley_control examples/path_tracking/example_stanley_control.cpp )
+target_link_libraries(stanley_control ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
-# add_executable(mpc examples/path_tracking/example_mpc.cpp)
-# target_link_libraries(mpc ${Boost_LIBRARIES} ${PROJECT_NAME}_core ipopt)
+add_executable(mpc examples/path_tracking/example_mpc.cpp)
+target_link_libraries(mpc ${Boost_LIBRARIES} ${PROJECT_NAME}_core ipopt)
 
