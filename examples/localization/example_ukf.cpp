@@ -14,7 +14,7 @@ int main(){
     float beta = 2.0f; // for gaussian distribution, beta=2 is optimal
     float kappa = 0.0f;
 
-    // control input (v, w) will be constant 
+    // control input (v, w) will be constant
     Eigen::Vector2f u = Eigen::Vector2f(1.0f, 0.1f);
 
     // noisy control for dr
@@ -46,7 +46,7 @@ int main(){
     R(1,1) = 1.0;
 
     float control_noise_v = 1.0;
-    float control_noise_w = std::pow(deg2rad(30.0), 2); 
+    float control_noise_w = std::pow(deg2rad(30.0), 2);
 
     float obs_noise_x =  0.5 * 0.5;
     float obs_noise_y = 0.5 * 0.5;
@@ -108,7 +108,7 @@ int main(){
         gp.send1d(obs_path);
         gp.send1d(error_ellipse);
         gp.send1d(est_path);
-        // sleep(0.2);        
+        // sleep(0.2);
 
     }
 

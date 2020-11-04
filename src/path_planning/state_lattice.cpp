@@ -7,8 +7,8 @@
 
 std::vector<Pose2D> sampleStates(std::vector<float>& angle_samples, float a_min,
                  float a_max, float d, float p_max, float p_min, size_t nh) {
-    std::vector<Pose2D> states; 
-    
+    std::vector<Pose2D> states;
+
     float xf, yf, yawf;
     for (float i : angle_samples) {
         float a = a_min + (a_max - a_min) * i;
@@ -17,7 +17,7 @@ std::vector<Pose2D> sampleStates(std::vector<float>& angle_samples, float a_min,
             yf = d * std::sin(a);
             if (nh == 1)
                 yawf = (p_max - p_min) / 2.f + a;
-            else 
+            else
                 yawf = p_min + (p_max - p_min) * j / (nh - 1.f) + a;
             Pose2D final_state {xf, yf, yawf};
             states.push_back(final_state);
@@ -36,7 +36,7 @@ std::vector<Pose2D> calculateUniformPolarStates(size_t nxy, size_t nh, float d,
         angle_samples[i] = i / (nxy - 1.f);
 
     std::vector<Pose2D> states = sampleStates(angle_samples, a_min, a_max, d, p_max, p_min, nh);
-    
+
     return states;
 }
 
@@ -64,7 +64,7 @@ std::vector<Pose2D> calculateBiasedPolarStates(float goal_angle, int ns, int nxy
     std::vector<float> cumsum_cnav(cnav.size());
     std::partial_sum(cnav.begin(), cnav.end(), cumsum_cnav.begin());
 
-    // output angles 
+    // output angles
     std::vector<float> di;
     int li = 0;
     for (int i = 0; i < nxy; ++i ) {
@@ -76,15 +76,15 @@ std::vector<Pose2D> calculateBiasedPolarStates(float goal_angle, int ns, int nxy
             }
         }
     }
-    
+
     auto states = sampleStates(di, a_min, a_max, d, p_max, p_min, nh);
-    return states;  
+    return states;
 }
 
 
 
 std::vector<Pose2D> calculateLaneStates(
-    float l_center, float l_heading, float l_width, 
+    float l_center, float l_heading, float l_width,
     float v_width, float d, size_t nxy) {
     float xc = d * std::cos(l_heading) + l_center * std::sin(l_heading);
     float yc = d * std::sin(l_heading) + l_center * std::cos(l_heading);
@@ -105,7 +105,7 @@ std::vector<Pose2D> calculateLaneStates(
 
 std::pair<std::vector<TableEntry>, Arrow> generatePaths(TrajectoryOptimizer& optim, std::vector<TableEntry>& lookup,
                                      std::vector<Pose2D>& states, float k0) {
-    
+
     // track all valid end points states
     std::vector<TableEntry> table;
 

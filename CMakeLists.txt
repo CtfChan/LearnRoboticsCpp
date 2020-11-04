@@ -39,10 +39,10 @@ add_library(${PROJECT_NAME}_core
 
     # # path planning
     # src/path_planning/potential_field.cpp
-    # src/path_planning/quintic_polynomial.cpp
+    src/path_planning/quintic_polynomial.cpp
     src/path_planning/trajectory_optimizer.cpp
     src/path_planning/state_lattice.cpp
-    # src/path_planning/cubic_spline.cpp
+    src/path_planning/cubic_spline.cpp
     # src/path_planning/dwa.cpp
     # src/path_planning/prm.cpp
     # src/path_planning/grid_search.cpp
@@ -91,17 +91,17 @@ target_link_libraries(particle_filter ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 # add_executable(dwa examples/path_planning/example_dwa.cpp)
 # target_link_libraries(dwa ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
-# add_executable(quintic_polynomial examples/path_planning/example_quintic_polynomial.cpp)
-# target_link_libraries(quintic_polynomial ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+add_executable(quintic_polynomial examples/path_planning/example_quintic_polynomial.cpp)
+target_link_libraries(quintic_polynomial ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
-# add_executable(cubic_spline examples/path_planning/example_cubic_spline.cpp)
-# target_link_libraries(cubic_spline ${Boost_LIBRARIES}  ${PROJECT_NAME}_core)
+add_executable(cubic_spline examples/path_planning/example_cubic_spline.cpp)
+target_link_libraries(cubic_spline ${Boost_LIBRARIES}  ${PROJECT_NAME}_core)
 
 add_executable(trajectory_optimizer examples/path_planning/example_trajectory_optimizer.cpp)
 target_link_libraries(trajectory_optimizer ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
-# add_executable(lookup_table_generation examples/path_planning/example_lookup_table_generation.cpp)
-# target_link_libraries(lookup_table_generation ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+add_executable(lookup_table_generation examples/path_planning/example_lookup_table_generation.cpp)
+target_link_libraries(lookup_table_generation ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
 add_executable(state_lattice examples/path_planning/example_state_lattice.cpp)
 target_link_libraries(state_lattice ${Boost_LIBRARIES} ${PROJECT_NAME}_core)

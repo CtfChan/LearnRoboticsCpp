@@ -41,9 +41,6 @@ Pose2DTrajectory TrajectoryOptimizer::optimizeTrajectory(Pose2D &target_pose,
     Pose2D final_pose{traj.x.back(), traj.y.back(), traj.theta.back()};
     Eigen::Vector3f d = calculatePoseErrorVector(target_pose, final_pose);
     float cost = d.norm();
-    // std::cout << "final_pose: " << final_pose.x << " " << final_pose.y << " "
-    // << final_pose.theta << std::endl; std::cout << "current cost " << cost <<
-    // std::endl;
 
     gp << "plot '-' with line \n";
     gp.send1d(boost::make_tuple(traj.x, traj.y));
@@ -60,13 +57,6 @@ Pose2DTrajectory TrajectoryOptimizer::optimizeTrajectory(Pose2D &target_pose,
     params.s += alpha * dp(0);
     params.km += alpha * dp(1);
     params.kf += alpha * dp(2);
-
-    // std::cout << "alpha: " << alpha << std::endl;
-    // std::cout << "params: " << params.s  << " " << params.km << " " <<
-    // params.kf << std::endl;
-
-    // std::cout << "dp: " << dp << std::endl;
-    // std::cout << "jacob: " << J  << std::endl;
   }
 
   return traj;
