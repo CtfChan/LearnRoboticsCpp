@@ -47,47 +47,13 @@ $ sudo docker build -f Dockerfile -t learn_robotics_cpp .
 $ sudo docker run --mount type=bind,source="$(pwd)",target=/root/LearnRoboticsCpp -it learn_robotics_cpp
 ```
 
-## Dependencies Installation
-1. apt installs
+From inside the Docker
 ```
-sudo apt update
-sudo apt install build-essential
-sudo apt install cmake
-sudo apt install gnuplot
-sudo apt install libboost-all-dev
-sudo apt install libopencv-dev python3-opencv
-sudo apt install libeigen3-dev
-sudo apt install cppad
+$ cd ~/LearnRoboticsCpp
+$ ./bin/state_lattice # or whatever executable you want to run
 ```
 
-2. ipoptd install
-```
-sudo apt install gfortran
-sudo apt install unzip
-```
-
-You probably want to `cd` into another directory like `Downloads` for this folder
-```
-wget https://www.coin-or.org/download/source/Ipopt/Ipopt-3.12.7.zip && unzip Ipopt-3.12.7.zip && rm Ipopt-3.12.7.zip
-```
-Call `install_ipopt.sh` in this repo with sudo and the source directory as the first argument (e.g. `sudo bash install_ipopt.sh ~/Ipopt-3.12.7`)
-
-3. `Xming` (for Windows Subsystem Linux users only)
-Need to install xming for gnuplot visualization: https://sourceforge.net/projects/xming/.
-Set display to `gnuplot` with: `$ export DISPLAY=:0 gnuplot`.
-
-
-4. Install Ceres
-
-## Build
-```console
-$ git clone https://github.com/CtfChan/LearnRoboticsCpp.git
-$ mkdir build
-$ cd build
-$ cmake ../
-$ make -j4
-```
-
+The images will show up in the `animations` directory.
 
 ## Path Planning
 ### DWA
