@@ -14,7 +14,12 @@ ENV PATH="/usr/bin/cmake/bin:${PATH}"
 # deps
 RUN apt-get update &&\
     apt-get install -y --no-install-recommends \
-    libboost-all-dev libopencv-dev python3-opencv libeigen3-dev cppad gnuplot &&\
+    libboost-all-dev\
+    libopencv-dev\
+    python3-opencv\
+    libeigen3-dev\
+    cppad\
+    gnuplot &&\
     apt-get clean
 
 # ipopt
@@ -30,6 +35,11 @@ RUN tar zxf ceres-solver-2.0.0.tar.gz
 RUN mkdir ceres-bin
 RUN cd ceres-bin && cmake ../ceres-solver-2.0.0 && make -j3 && make install
 
+# ompl
+RUN git clone https://github.com/ompl/ompl.git
+RUN cd ompl && mkdir -p build/Release && cd build/Release \
+    && cmake ../.. &&  make install -j 4
+
 FROM deps_stage AS build_stage
 
 COPY CMakeLists.txt /root/LearnRoboticsCpp/CMakeLists.txt
@@ -38,7 +48,7 @@ COPY include /root/LearnRoboticsCpp/include
 COPY examples /root/LearnRoboticsCpp/examples
 
 WORKDIR /root/LearnRoboticsCpp
-# RUN mkdir build && cd build && cmake .. && make -j 4
+RUN mkdir build && cd build && cmake .. && make -j 4
 
 
 # ENTRYPOINT [ "bash", "-c" ]
