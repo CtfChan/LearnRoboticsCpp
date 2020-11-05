@@ -49,6 +49,7 @@ COPY examples /root/LearnRoboticsCpp/examples
 
 WORKDIR /root/LearnRoboticsCpp
 RUN mkdir build && cd build && cmake .. && make -j 4
+RUN export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 
 
 # ENTRYPOINT [ "bash", "-c" ]

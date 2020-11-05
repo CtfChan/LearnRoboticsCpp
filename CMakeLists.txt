@@ -12,16 +12,17 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
 find_package(Eigen3 REQUIRED)
 find_package(OpenCV REQUIRED)
-find_package(Boost 1.67.0 COMPONENTS filesystem system iostreams REQUIRED)
+find_package(Boost 1.67.0 COMPONENTS filesystem system iostreams program_options REQUIRED)
 find_package(Ceres REQUIRED)
 find_package(ompl REQUIRED)
 
 include_directories(${EIGEN3_INCLUDE_DIR})
 include_directories(include)
+include_directories(${OMPL_INCLUDE_DIRS})
+
 
 include_directories(/usr/local/include)
 link_directories(/usr/local/lib)
-
 
 # Create library
 ## Declare a cpp library
@@ -50,7 +51,6 @@ add_library(${PROJECT_NAME}_core
     src/path_planning/rrt.cpp
     src/path_planning/rrt_star.cpp
 )
-
 
 # ##############################
 # #Localization
@@ -105,6 +105,10 @@ target_link_libraries(lookup_table_generation ${Boost_LIBRARIES} ${PROJECT_NAME}
 
 add_executable(state_lattice examples/path_planning/example_state_lattice.cpp)
 target_link_libraries(state_lattice ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
+
+
+add_executable(dubins examples/path_planning/example_dubins.cpp)
+target_link_libraries(dubins ${Boost_LIBRARIES} ${OMPL_LIBRARIES})
 
 
 # ##############################
