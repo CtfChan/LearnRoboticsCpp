@@ -12,7 +12,7 @@ RUN wget https://github.com/Kitware/CMake/releases/download/v3.18.2/cmake-3.18.2
 ENV PATH="/usr/bin/cmake/bin:${PATH}"
 
 # deps
-RUN apt-get update &&\
+RUN apt-get update  &&\
     apt-get install -y --no-install-recommends \
     libboost-all-dev\
     libopencv-dev\
@@ -49,7 +49,6 @@ COPY examples /root/LearnRoboticsCpp/examples
 
 WORKDIR /root/LearnRoboticsCpp
 RUN mkdir build && cd build && cmake .. && make -j 4
-RUN export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 
-# ENTRYPOINT [ "bash", "-c" ]

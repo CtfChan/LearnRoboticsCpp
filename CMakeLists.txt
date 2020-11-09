@@ -108,7 +108,7 @@ target_link_libraries(state_lattice ${Boost_LIBRARIES} ${PROJECT_NAME}_core)
 
 
 add_executable(dubins examples/path_planning/example_dubins.cpp)
-target_link_libraries(dubins ${Boost_LIBRARIES} ${OMPL_LIBRARIES})
+target_link_libraries(dubins ${Boost_LIBRARIES} ${OMPL_LIBRARIES}  ${PROJECT_NAME}_core)
 
 
 # ##############################

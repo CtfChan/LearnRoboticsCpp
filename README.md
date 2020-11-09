@@ -44,7 +44,7 @@ Tested on Ubuntu 18.04
 The Docker image is about 3GB.
 ```
 $ sudo docker build -f Dockerfile -t learn_robotics_cpp .
-$ sudo docker run --mount type=bind,source="$(pwd)",target=/root/LearnRoboticsCpp -it learn_robotics_cpp
+$ sudo docker run --mount type=bind,source="$(pwd)",target=/root/LearnRoboticsCpp -it learn_robotics_cpp --name rob_cpp
 ```
 
 From inside the Docker
@@ -54,6 +54,17 @@ $ ./bin/state_lattice # or whatever executable you want to run
 ```
 
 The images will show up in the `animations` directory.
+
+
+```
+$ sudo docker stop rob_cpp
+```
+
+```
+$ sudo docker exec rob_cpp bash
+```
+
+
 
 ## Path Planning
 ### DWA
