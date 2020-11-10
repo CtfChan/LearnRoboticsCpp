@@ -6,19 +6,19 @@
 
 #include <Eigen/Eigen>
 
-BicycleModelRobot::BicycleModelRobot(float _x, float _y, float _yaw, 
-                float _v, float _L, float _max_steer, 
+BicycleModelRobot::BicycleModelRobot(float _x, float _y, float _yaw,
+                float _v, float _L, float _max_steer,
                 float _min_speed, float _max_speed, float _max_accel,
                 bool _normalize_yaw ) :
-                x(_x), y(_y), yaw(_yaw), v(_v), L(_L), 
+                x(_x), y(_y), yaw(_yaw), v(_v), L(_L),
                 max_steer(_max_steer),
-                min_speed(_min_speed), max_speed(_max_speed), 
+                min_speed(_min_speed), max_speed(_max_speed),
                 max_accel(_max_accel), normalize_yaw(_normalize_yaw) {}
 
 
 void BicycleModelRobot::update(float acc, float delta, float dt) {
     delta = std::clamp(delta, -max_steer, max_steer);
-    
+
     x += v * std::cos(yaw) * dt;
     y += v * std::sin(yaw) * dt;
     yaw += v / L * std::tan(delta) * dt;
@@ -40,7 +40,7 @@ float deg2rad(float deg) {
 float normalizeAngle(float angle) {
     while (angle > M_PI)
         angle-= 2.0f * M_PI;
-    while (angle < -M_PI) 
+    while (angle < -M_PI)
         angle += 2.0f*M_PI;
     return angle;
 }
@@ -56,7 +56,7 @@ std::array<float, 3> quadraticCoefficients(std::array<float, 3>& x, std::array<f
     b << y[0], y[1], y[2];
 
     Eigen::Vector3f coeffs = A.inverse() * b;
-    
+
     return {coeffs[0] , coeffs[1], coeffs[2]};
 }
 
@@ -74,8 +74,6 @@ Arrow poseToVector(float x, float y, float theta, float r) {
     auto arrow = std::make_tuple(x, y, dx ,dy);
     return { arrow };
 }
-
-
 
 
 Arrow trajectoryToVector(Pose2DTrajectory& traj) {

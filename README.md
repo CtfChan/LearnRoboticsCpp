@@ -42,9 +42,17 @@ Tested on Ubuntu 18.04
 
 ## Running with Docker
 The Docker image is about 3GB.
+
+Deployment
 ```
-$ sudo docker build -f Dockerfile -t learn_robotics_cpp .
-$ sudo docker run --mount type=bind,source="$(pwd)",target=/root/LearnRoboticsCpp -it learn_robotics_cpp --name rob_cpp
+$ sudo docker build -f Dockerfile -t ctfchan/learn-robotics-cpp:latest .
+$ sudo docker push ctfchan/learn-robotics-cpp:latest
+```
+
+Make sure `-it ctfchan/learn-robotics-cpp` goes last when you do `docker run`.
+```
+$ sudo docker pull ctfchan/learn-robotics-cpp
+$ sudo docker run --name learn-robotics-cpp --mount type=bind,source="$(pwd)",target=/root/LearnRoboticsCpp -it ctfchan/learn-robotics-cpp
 ```
 
 From inside the Docker
@@ -52,19 +60,18 @@ From inside the Docker
 $ cd ~/LearnRoboticsCpp
 $ ./bin/state_lattice # or whatever executable you want to run
 ```
-
 The images will show up in the `animations` directory.
 
-
+`docker stop` when you're done. `docker rm` when you want to get rid of the container to start over or something.
 ```
-$ sudo docker stop rob_cpp
-```
-
-```
-$ sudo docker exec rob_cpp bash
+$ sudo docker stop learn-robotics-cpp
+$ sudo docker rm learn-robotics-cpp
 ```
 
-
+`docker exec` to run it after you stop it.
+```
+$ sudo docker exec learn-robotics-cpp bash
+```
 
 ## Path Planning
 ### DWA
